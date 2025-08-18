@@ -10,560 +10,527 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary-color: #004d40;
-    --secondary-color: #00332c;
-    --accent-booking: #0071c2;
-    --accent-airbnb: #FF385C;
-    --background-light: #f8f9fa;
-    --text-color: #333;
-    --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: var(--background-light);
-    color: var(--text-color);
-    line-height: 1.6;
-  }
-  h1, h2, h3 {
-    font-weight: 600;
-    color: var(--secondary-color);
-  }
-  header {
-    background: #e6f2ee; 
-    color: #333; 
-    padding: 40px 20px; 
-    text-align: center; 
-    border-radius: 0 0 20px 20px; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  main {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-  .language-selector {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-  }
-  .language-selector img {
-    width: 32px;
-    height: auto;
-    cursor: pointer;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .language-selector img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  }
-  .language-selector img.active {
-    box-shadow: 0 0 0 3px var(--primary-color);
-  }
-  .slideshow-container {
-    position: relative;
-    max-width: 1100px;
-    margin-bottom: 30px;
-    border-radius: 15px;
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-  }
-  .slide {
-    width: 100%;
-    height: 550px;
-    object-fit: cover;
-    display: none;
-    cursor: pointer;
-  }
-  .slide.active {
-    display: block;
-  }
-  .btn-prev, .btn-next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.5);
-    color: white;
-    font-size: 24px;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s;
-  }
-  .btn-prev:hover, .btn-next:hover {
-    background-color: rgba(0,0,0,0.8);
-  }
-  .btn-prev { left: 15px; }
-  .btn-next { right: 15px; }
-  .lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.9);
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  .lightbox-content {
-    margin: auto;
-    display: block;
-    max-width: 90%;
-    max-height: 90%;
-    cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease-out;
-  }
-  .lightbox-content:hover {
-    transform: scale(1.01);
-  }
-  .lightbox-caption {
-    margin-top: 15px;
-    color: white;
-    font-size: 1.2rem;
-    text-align: center;
-    padding: 0 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  }
-  .main-content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    margin-bottom: 30px;
-  }
-  @media (max-width: 900px) {
-    .main-content-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  .content-box {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: var(--box-shadow);
-  }
-  .host-section {
-    text-align: center;
-  }
-  .host-image {
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    border-radius: 50%;
-    border: 5px solid var(--primary-color);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin-bottom: 15px;
-  }
-  .host-text {
-    font-style: italic;
-    color: #555;
-    margin-top: 10px;
-  }
-  .highlights-list {
-    list-style: none;
-    padding-left: 0;
-    margin-top: 15px;
-  }
-  .highlights-list li {
-    background: var(--background-light);
-    border-left: 4px solid var(--primary-color);
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-weight: 500;
-  }
-  .booking-buttons {
-    margin-top: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-  }
-  .booking-btn, .airbnb-btn {
-    padding: 15px 30px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: transform 0.2s, background-color 0.2s;
-    background: var(--accent-booking);
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .airbnb-btn {
-    background: var(--accent-airbnb);
-  }
-  .booking-btn:hover, .airbnb-btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-  }
-  .booking-logo, .airbnb-logo {
-    height: 30px;
-    width: auto;
-    filter: invert(1);
-  }
-  .airbnb-logo {
-    filter: none;
-  }
-  .map-container {
-    margin-bottom: 30px;
-    padding: 20px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: var(--box-shadow);
-  }
-  #map {
-    width: 100%;
-    height: 400px;
-    border-radius: 12px;
-    margin-top: 15px;
-  }
-  .map-popup-image {
-    width: 100%;
-    max-width: 280px;
-    border-radius: 8px;
-    margin-top: 8px;
-  }
-  footer {
-    background: var(--secondary-color);
-    color: #ddd;
-    padding: 40px 20px;
-  }
-  .footer-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-  }
-  .footer-content section {
-    flex: 1;
-    min-width: 250px;
-    margin: 10px 0;
-  }
-  .footer-content h3 {
-    color: white;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 8px;
-    margin-bottom: 15px;
-  }
-  .footer-content a {
-    color: #eee;
-    text-decoration: none;
-  }
-  .footer-content a:hover {
-    text-decoration: underline;
-  }
+  :root {
+    --primary-color: #004d40;
+    --secondary-color: #00332c;
+    --accent-booking: #0071c2;
+    --accent-airbnb: #FF385C;
+    --background-light: #f8f9fa;
+    --text-color: #333;
+    --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--background-light);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    font-weight: 600;
+    color: var(--secondary-color);
+  }
+  header {
+    background: #e6f2ee; 
+    color: #333; 
+    padding: 40px 20px; 
+    text-align: center; 
+    border-radius: 0 0 20px 20px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative; /* Für die Positionierung der Flaggen */
+  }
+  main {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
+  /* --- NEU: Sprachauswahl --- */
+  .language-selector {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  .language-selector img {
+    width: 32px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .language-selector img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  .language-selector img.active {
+    box-shadow: 0 0 0 3px var(--primary-color);
+  }
+  /* -------------------------- */
+
+  /* Slideshow */
+  .slideshow-container {
+    position: relative;
+    max-width: 1100px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+  }
+  .slide {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    display: none;
+  }
+  .slide.active {
+    display: block;
+  }
+  .btn-prev, .btn-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+  .btn-prev:hover, .btn-next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  .btn-prev { left: 15px; }
+  .btn-next { right: 15px; }
+
+  /* Content Grid */
+  .main-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  @media (max-width: 900px) {
+    .main-content-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .content-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+  }
+  .host-section {
+    text-align: center;
+  }
+  .host-image {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .host-text {
+    font-style: italic;
+    color: #555;
+    margin-top: 10px;
+  }
+  
+  /* Highlights & Booking */
+  .highlights-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+  }
+  .highlights-list li {
+    background: var(--background-light);
+    border-left: 4px solid var(--primary-color);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  .booking-buttons {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+  .booking-btn, .airbnb-btn {
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background-color 0.2s;
+    background: var(--accent-booking);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .airbnb-btn {
+    background: var(--accent-airbnb);
+  }
+  .booking-btn:hover, .airbnb-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+  }
+  .booking-logo, .airbnb-logo {
+    height: 30px;
+    width: auto;
+    filter: invert(1);
+  }
+  .airbnb-logo {
+    filter: none;
+  }
+
+  /* Map */
+  .map-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: var(--box-shadow);
+  }
+  #map {
+    width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    margin-top: 15px;
+  }
+  .map-popup-image {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--secondary-color);
+    color: #ddd;
+    padding: 40px 20px;
+  }
+  .footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .footer-content section {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px 0;
+  }
+  .footer-content h3 {
+    color: white;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+  }
+  .footer-content a {
+    color: #eee;
+    text-decoration: none;
+  }
+  .footer-content a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="language-selector">
-    <img src="https://flagcdn.com/de.svg" alt="Deutsch" data-lang="de">
-    <img src="https://flagcdn.com/gb.svg" alt="English" data-lang="en">
-  </div>
-  <h1 style="margin: 0; font-weight: 700; color: #004d40; font-size: 2.5em;" data-translate="title_main">Ferienwohnung Parndorf</h1>
-  <p style="margin-top: 5px; font-size: 1.1em; font-style: italic;" data-translate="subtitle">Ein Zuhause fernab der Heimat</p>
+  <div class="language-selector">
+    <img src="https://flagcdn.com/de.svg" alt="Deutsch" data-lang="de">
+    <img src="https://flagcdn.com/gb.svg" alt="English" data-lang="en">
+  </div>
+  <h1 style="margin: 0; font-weight: 700; color: #004d40; font-size: 2.5em;" data-translate="title_main">Ferienwohnung Parndorf</h1>
+  <p style="margin-top: 5px; font-size: 1.1em; font-style: italic;" data-translate="subtitle">Ein Zuhause fernab der Heimat</p>
 </header>
 
 <main>
-  <div class="slideshow-container" aria-roledescription="carousel" data-translate-attr="aria-label:aria_carousel">
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275414.jpg?k=57037e4535aa3931e89411578f23ce9167ba3ec1fe3b1c82d1db7447ed5a7e8f&o=" class="slide active" loading="eager" data-translate-attr="alt:alt_living_room" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724267371.jpg?k=4f765f7568ba361c297ccbfda637ad9b9ed779d32f431bf299e99143dd3feb8f&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bedroom" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275418.jpg?k=482ed5678077e79049f67f844bc0c8ae8ae251418ea8ed73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_kitchen" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275415.jpg?k=1e6d7f10d2297ced0b212a9945ea356aa4a0c920581ee73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bathroom" />
-    <button class="btn-prev" data-translate-attr="aria-label:aria_prev_slide">❮</button>
-    <button class="btn-next" data-translate-attr="aria-label:aria_next_slide">❯</button>
-  </div>
- 
-  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <img class="lightbox-content" id="lightbox-image" />
-    <p id="lightbox-caption" class="lightbox-caption"></p>
-  </div>
+  <div class="slideshow-container" aria-roledescription="carousel" data-translate-attr="aria-label:aria_carousel">
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275414.jpg?k=57037e4535aa3931e89411578f23ce9167ba3ec1fe3b1c82d1db7447ed5a7e8f&o=" class="slide active" loading="eager" data-translate-attr="alt:alt_living_room" />
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724267371.jpg?k=4f765f7568ba361c297ccbfda637ad9b9ed779d32f431bf299e99143dd3feb8f&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bedroom" />
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275418.jpg?k=482ed5678077e79049f67f844bc0c8ae8ae251418ea8ed73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_kitchen" />
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275415.jpg?k=1e6d7f10d2297ced0b212a9945ea356aa4a0c920581ee73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bathroom" />
+    <button class="btn-prev" data-translate-attr="aria-label:aria_prev_slide">❮</button>
+    <button class="btn-next" data-translate-attr="aria-label:aria_next_slide">❯</button>
+  </div>
 
-  <div class="main-content-grid">
-    <section class="content-box">
-      <h2 data-translate="apartment_title">Ihr gemütliches Apartment in Parndorf</h2>
-      <p data-translate="apartment_p1">Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.</p>
-      
-      <h3 data-translate="highlights_title">Highlights der Unterkunft</h3>
-      <ul class="highlights-list">
-        <li data-translate="highlight_1"><strong>Top-Lage:</strong> Nur <strong>2 km</strong> zum bekannten Designer Outlet Parndorf.</li>
-        <li data-translate="highlight_2"><strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.</li>
-        <li data-translate="highlight_3"><strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.</li>
-        <li data-translate="highlight_4"><strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).</li>
-        <li data-translate="highlight_5"><strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.</li>
-      </ul>
+  <div class="main-content-grid">
+    <section class="content-box">
+      <h2 data-translate="apartment_title">Ihr gemütliches Apartment in Parndorf</h2>
+      <p data-translate="apartment_p1">Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.</p>
+      
+      <h3 data-translate="highlights_title">Highlights der Unterkunft</h3>
+      <ul class="highlights-list">
+        <li data-translate="highlight_1"><strong>Top-Lage:</strong> Nur <strong>2 km</strong> zum bekannten Designer Outlet Parndorf.</li>
+        <li data-translate="highlight_2"><strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.</li>
+        <li data-translate="highlight_3"><strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.</li>
+        <li data-translate="highlight_4"><strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).</li>
+        <li data-translate="highlight_5"><strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.</li>
+      </ul>
 
-      <p data-translate="apartment_p2">Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.</p>
+      <p data-translate="apartment_p2">Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.</p>
 
-      <div class="booking-buttons">
-        <a href="https://www.booking.com/hotel/at/ferienwohnung-parndorf.de.html" target="_blank" rel="noopener noreferrer" class="booking-btn">
-          <img src="Booking.com_logo.svg" alt="Booking.com Logo" class="booking-logo" />
-          <span data-translate="booking_button">Booking.com</span>
-        </a>
-        <a href="https://www.airbnb.ca/rooms/24131580" target="_blank" rel="noopener noreferrer" class="airbnb-btn">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb Logo" class="airbnb-logo" />
-          <span data-translate="airbnb_button">Airbnb</span>
-        </a>
-      </div>
-    </section>
+      <div class="booking-buttons">
+        <a href="https://www.booking.com/hotel/at/ferienwohnung-parndorf.de.html" target="_blank" rel="noopener noreferrer" class="booking-btn">
+          <img src="Booking.com_logo.svg" alt="Booking.com Logo" class="booking-logo" />
+          <span data-translate="booking_button">Booking.com</span>
+        </a>
+        <a href="https://www.airbnb.ca/rooms/24131580" target="_blank" rel="noopener noreferrer" class="airbnb-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb Logo" class="airbnb-logo" />
+          <span data-translate="airbnb_button">Airbnb</span>
+        </a>
+      </div>
+    </section>
 
-    <aside class="host-section content-box">
-      <h2 data-translate="host_title">Ihre Gastgeberin</h2>
-      <img src="https://cf.bstatic.com/xdata/images/xphoto/max500_ao/558254115.jpg?k=c656692602b8801c33a24397289df9206a86476fc308185b95b7c90300533d01&o=" class="host-image" loading="lazy" data-translate-attr="alt:alt_host"/>
-      <p class="host-name">Gabi</p>
-      <p class="host-text" data-translate="host_quote">"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen."</p>
-    </aside>
-  </div>
+    <aside class="host-section content-box">
+      <h2 data-translate="host_title">Ihre Gastgeberin</h2>
+      <img src="https://cf.bstatic.com/xdata/images/xphoto/max500_ao/558254115.jpg?k=c656692602b8801c33a24397289df9206a86476fc308185b95b7c90300533d01&o=" class="host-image" loading="lazy" data-translate-attr="alt:alt_host"/>
+      <p class="host-name">Gabi</p>
+      <p class="host-text" data-translate="host_quote">"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen."</p>
+    </aside>
+  </div>
 
-  <section class="map-container">
-    <h2 data-translate="location_title">Lage & Umgebung</h2>
-    <div id="map" role="region" data-translate-attr="aria-label:aria_map"></div>
-  </section>
+  <section class="map-container">
+    <h2 data-translate="location_title">Lage & Umgebung</h2>
+    <div id="map" role="region" data-translate-attr="aria-label:aria_map"></div>
+  </section>
 </main>
 
 <footer>
-  <div class="footer-content">
-    <section>
-      <h3 data-translate="footer_imprint_title">Impressum</h3>
-      <p>Ferienwohnung Parndorf<br />
-      Inhaberin: Gabriela Linzatti<br />
-      Obere Wunkau 38<br />
-      7111 Parndorf<br />
-      <span data-translate="country">Österreich</span></p>
-    </section>
-    <section>
-      <h3 data-translate="footer_contact_title">Kontakt</h3>
-      <p>E-Mail: <a href="mailto:ferienwohnung-parndor@gmail.com">ferienwohnung-parndor@gmail.com</a><br />
-      <span data-translate="phone">Telefon</span>: +43 650 412 4810</p>
-    </section>
-  </div>
+  <div class="footer-content">
+    <section>
+      <h3 data-translate="footer_imprint_title">Impressum</h3>
+      <p>Ferienwohnung Parndorf<br />
+      Inhaberin: Gabriela Linzatti<br />
+      Obere Wunkau 38<br />
+      7111 Parndorf<br />
+      <span data-translate="country">Österreich</span></p>
+    </section>
+    <section>
+      <h3 data-translate="footer_contact_title">Kontakt</h3>
+      <p>E-Mail: <a href="mailto:ferienwohnung-parndor@gmail.com">ferienwohnung-parndor@gmail.com</a><br />
+      <span data-translate="phone">Telefon</span>: +43 650 412 4810</p>
+    </section>
+  </div>
 </footer>
 
 <script>
-  const slides = document.querySelectorAll('.slideshow-container .slide');
-  const btnPrev = document.querySelector('.btn-prev');
-  const btnNext = document.querySelector('.btn-next');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImage = document.getElementById('lightbox-image');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  let currentIndex = 0;
-  let slideInterval;
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.display = i === index ? 'block' : 'none';
-    });
-  }
-  showSlide(currentIndex);
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
-  }
-  btnNext.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-  });
-  btnPrev.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
-  function startInterval() {
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-  function resetInterval() {
-    clearInterval(slideInterval);
-    startInterval();
-  }
-  startInterval();
-  function openLightbox(imageSrc, captionText) {
-    lightboxImage.src = imageSrc;
-    lightboxCaption.textContent = captionText;
-    lightbox.style.display = 'flex';
-  }
-  function closeLightbox() {
-    lightbox.style.display = 'none';
-  }
-  slides.forEach(slide => {
-    slide.addEventListener('click', (event) => {
-      const imageSrc = event.target.src;
-      const captionText = event.target.alt;
-      openLightbox(imageSrc, captionText);
-    });
-  });
-  lightbox.addEventListener('click', (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-  lightboxImage.addEventListener('click', () => {
-    closeLightbox();
-  });
+  const slides = document.querySelectorAll('.slideshow-container .slide');
+  const btnPrev = document.querySelector('.btn-prev');
+  const btnNext = document.querySelector('.btn-next');
+  let currentIndex = 0;
+  let slideInterval;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.style.display = i === index ? 'block' : 'none';
+    });
+  }
+  showSlide(currentIndex);
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  btnNext.addEventListener('click', () => {
+    nextSlide();
+    resetInterval();
+  });
+  btnPrev.addEventListener('click', () => {
+    prevSlide();
+    resetInterval();
+  });
+
+  function startInterval() {
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+  function resetInterval() {
+    clearInterval(slideInterval);
+    startInterval();
+  }
+
+  startInterval();
 </script>
 
 <script>
-  function initMap() {
-    const location = { lat: 48.0007115, lng: 16.8640465 };
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center: location,
-      disableDefaultUI: true,
-    });
-    
-    const contentString = `
-      <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
-        <h3 style="margin: 0 0 5px; color: var(--secondary-color);"><a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-color); text-decoration: none;">Ferienwohnung Parndorf</a></h3>
-        <p style="margin: 0 0 10px; font-size: 14px;">Obere Wunkau 38, 7111 Parndorf</p>
-        <p style="margin-top:10px; font-size: 14px;"><a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung+Parndorf" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">Route planen</a></p>
-      </div>`;
-    
-    const infowindow = new google.maps.InfoWindow({ content: contentString });
-    
-    const marker = new google.maps.marker.AdvancedMarkerElement({
-      map: map,
-      position: location,
-      title: "Ferienwohnung Parndorf",
-    });
-    marker.addEventListener("click", () => infowindow.open(map, marker));
-    infowindow.open(map, marker);
-  }
+  function initMap() {
+    const location = { lat: 48.0007115, lng: 16.8640465 };
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 15,
+      center: location,
+      disableDefaultUI: true,
+    });
+    
+    // ===== HIER IST DIE ÄNDERUNG =====
+    const contentString = `
+      <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
+        <h3 style="margin: 0 0 5px; color: var(--secondary-color);"><a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-color); text-decoration: none;">Ferienwohnung Parndorf</a></h3>
+        <p style="margin: 0 0 10px; font-size: 14px;">Obere Wunkau 38, 7111 Parndorf</p>
+        <p style="margin-top:10px; font-size: 14px;"><a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung+Parndorf" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">Route planen</a></p>
+      </div>`;
+
+    const infowindow = new google.maps.InfoWindow({ content: contentString });
+    const marker = new google.maps.Marker({ position: location, map, title: "Ferienwohnung Parndorf" });
+
+    marker.addListener("click", () => infowindow.open(map, marker));
+    infowindow.open(map, marker);
+  }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap&libraries=marker"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap"></script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const translations = {
-    de: {
-      document_title: "Ferienwohnung Parndorf - Gemütliches Apartment in Top-Lage",
-      meta_description: "Ferienwohnung Parndorf - gemütliches Apartment in Top-Lage. Nur 2 km vom Designer Outlet entfernt. Ideal für Shopping, Erholung am Neusiedler See und Dienstreisen.",
-      title_main: "Ferienwohnung Parndorf",
-      subtitle: "Ein Zuhause fernab der Heimat",
-      aria_carousel: "Bilder der Ferienwohnung Parndorf",
-      alt_living_room: "Gemütliches Wohnzimmer mit bequemer Couch und Fernseher",
-      alt_bedroom: "Ruhiges Schlafzimmer mit großem Doppelbett",
-      alt_kitchen: "Voll ausgestattete, moderne Küche mit Essbereich",
-      alt_bathroom: "Helles Badezimmer mit Dusche und WC",
-      aria_prev_slide: "Vorheriges Bild anzeigen",
-      aria_next_slide: "Nächstes Bild anzeigen",
-      apartment_title: "Ihr gemütliches Apartment in Parndorf",
-      apartment_p1: "Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.",
-      highlights_title: "Highlights der Unterkunft",
-      highlight_1: "<strong>Top-Lage:</strong> Nur <strong>2 km</strong> zum bekannten Designer Outlet Parndorf.",
-      highlight_2: "<strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.",
-      highlight_3: "<strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.",
-      highlight_4: "<strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).",
-      highlight_5: "<strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.",
-      apartment_p2: "Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.",
-      booking_button: "Booking.com",
-      airbnb_button: "Airbnb",
-      host_title: "Ihre Gastgeberin",
-      alt_host: "Foto der Gastgeberin der Ferienwohnung Parndorf",
-      host_quote: '"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen."',
-      location_title: "Lage & Umgebung",
-      aria_map: "Google Maps Karte mit der Lage der Ferienwohnung Parndorf",
-      footer_imprint_title: "Impressum",
-      country: "Österreich",
-      footer_contact_title: "Kontakt",
-      phone: "Telefon",
-    },
-    en: {
-      document_title: "Holiday Apartment Parndorf - Cozy Flat in a Prime Location",
-      meta_description: "Holiday Apartment Parndorf - cozy flat in a prime location. Only 2 km from the Designer Outlet. Ideal for shopping, relaxing at Lake Neusiedl, and business trips.",
-      title_main: "Holiday Apartment Parndorf",
-      subtitle: "A home away from home",
-      aria_carousel: "Pictures of the Holiday Apartment Parndorf",
-      alt_living_room: "Cozy living room with a comfortable couch and TV",
-      alt_bedroom: "Quiet bedroom with a large double bed",
-      alt_kitchen: "Fully equipped, modern kitchen with dining area",
-      alt_bathroom: "Bright bathroom with shower and toilet",
-      aria_prev_slide: "Show previous image",
-      aria_next_slide: "Show next image",
-      apartment_title: "Your Cozy Apartment in Parndorf",
-      apartment_p1: "Welcome to our holiday apartment, your ideal retreat in Parndorf! Our apartment offers you maximum comfort in a quiet environment and is perfect for vacationers, shopping enthusiasts, and business travelers.",
-      highlights_title: "Accommodation Highlights",
-      highlight_1: "<strong>Top Location:</strong> Only <strong>2 km</strong> to the famous Designer Outlet Parndorf.",
-      highlight_2: "<strong>Great Transport Links:</strong> Direct access to the A4 and A6 motorways.",
-      highlight_3: "<strong>Pure Nature:</strong> Only <strong>8 km</strong> to the beautiful Lake Neusiedl.",
-      highlight_4: "<strong>Easy Arrival:</strong> <strong>32 km</strong> to Vienna Airport (VIE).",
-      highlight_5: "<strong>Comfort:</strong> Bakery nearby, free Wi-Fi, and a **private parking space** right at your doorstep.",
-      apartment_p2: "Our apartment has a fully equipped kitchen and a stylish interior that invites you to relax.",
-      booking_button: "Booking.com",
-      airbnb_button: "Airbnb",
-      host_title: "Your Host",
-      alt_host: "Photo of the host of the Holiday Apartment Parndorf",
-      host_quote: '"I look forward to welcoming you personally and ensuring you have an unforgettable stay."',
-      location_title: "Location & Surroundings",
-      aria_map: "Google Maps card with the location of the Holiday Apartment Parndorf",
-      footer_imprint_title: "Imprint",
-      country: "Austria",
-      footer_contact_title: "Contact",
-      phone: "Phone",
-    }
-  };
-  const languageSelector = document.querySelector('.language-selector');
-  const flags = languageSelector.querySelectorAll('img');
-  const setLanguage = (lang) => {
-    document.querySelectorAll('[data-translate]').forEach(element => {
-      const key = element.getAttribute('data-translate');
-      if (translations[lang][key]) {
-        element.innerHTML = translations[lang][key];
-      }
-    });
-    document.querySelectorAll('[data-translate-attr]').forEach(element => {
-        const attrs = element.getAttribute('data-translate-attr').split(';');
-        attrs.forEach(attrData => {
-            const [attrName, key] = attrData.split(':').map(s => s.trim());
-            if (translations[lang][key]) {
-                element.setAttribute(attrName, translations[lang][key]);
-            }
-        });
-    });
-    document.documentElement.lang = lang;
-    localStorage.setItem('language', lang);
-    flags.forEach(flag => {
-      flag.classList.toggle('active', flag.dataset.lang === lang);
-    });
-  };
-  flags.forEach(flag => {
-    flag.addEventListener('click', (event) => {
-      const selectedLang = event.target.getAttribute('data-lang');
-      setLanguage(selectedLang);
-    });
-  });
-  const savedLang = localStorage.getItem('language');
-  const browserLang = navigator.language.substring(0, 2);
-  let initialLang = 'de';
-  if (savedLang && translations[savedLang]) {
-      initialLang = savedLang;
-  } else if (browserLang && translations[browserLang]) {
-      initialLang = browserLang;
-  }
-  setLanguage(initialLang);
+
+  const translations = {
+    de: {
+      document_title: "Ferienwohnung Parndorf - Gemütliches Apartment in Top-Lage",
+      meta_description: "Ferienwohnung Parndorf - gemütliches Apartment in Top-Lage. Nur 2 km vom Designer Outlet entfernt. Ideal für Shopping, Erholung am Neusiedler See und Dienstreisen.",
+      title_main: "Ferienwohnung Parndorf",
+      subtitle: "Ein Zuhause fernab der Heimat",
+      aria_carousel: "Bilder der Ferienwohnung Parndorf",
+      alt_living_room: "Gemütliches Wohnzimmer mit bequemer Couch und Fernseher",
+      alt_bedroom: "Ruhiges Schlafzimmer mit großem Doppelbett",
+      alt_kitchen: "Voll ausgestattete, moderne Küche mit Essbereich",
+      alt_bathroom: "Helles Badezimmer mit Dusche und WC",
+      aria_prev_slide: "Vorheriges Bild anzeigen",
+      aria_next_slide: "Nächstes Bild anzeigen",
+      apartment_title: "Ihr gemütliches Apartment in Parndorf",
+      apartment_p1: "Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.",
+      highlights_title: "Highlights der Unterkunft",
+      highlight_1: "<strong>Top-Lage:</strong> Nur <strong>2 km</strong> zum bekannten Designer Outlet Parndorf.",
+      highlight_2: "<strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.",
+      highlight_3: "<strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.",
+      highlight_4: "<strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).",
+      highlight_5: "<strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.",
+      apartment_p2: "Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.",
+      booking_button: "Booking.com",
+      airbnb_button: "Airbnb",
+      host_title: "Ihre Gastgeberin",
+      alt_host: "Foto der Gastgeberin der Ferienwohnung Parndorf",
+      host_quote: '"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen."',
+      location_title: "Lage & Umgebung",
+      aria_map: "Google Maps Karte mit der Lage der Ferienwohnung Parndorf",
+      footer_imprint_title: "Impressum",
+      country: "Österreich",
+      footer_contact_title: "Kontakt",
+      phone: "Telefon",
+    },
+    en: {
+      document_title: "Holiday Apartment Parndorf - Cozy Flat in a Prime Location",
+      meta_description: "Holiday Apartment Parndorf - cozy flat in a prime location. Only 2 km from the Designer Outlet. Ideal for shopping, relaxing at Lake Neusiedl, and business trips.",
+      title_main: "Holiday Apartment Parndorf",
+      subtitle: "A home away from home",
+      aria_carousel: "Pictures of the Holiday Apartment Parndorf",
+      alt_living_room: "Cozy living room with a comfortable couch and TV",
+      alt_bedroom: "Quiet bedroom with a large double bed",
+      alt_kitchen: "Fully equipped, modern kitchen with dining area",
+      alt_bathroom: "Bright bathroom with shower and toilet",
+      aria_prev_slide: "Show previous image",
+      aria_next_slide: "Show next image",
+      apartment_title: "Your Cozy Apartment in Parndorf",
+      apartment_p1: "Welcome to our holiday apartment, your ideal retreat in Parndorf! Our apartment offers you maximum comfort in a quiet environment and is perfect for vacationers, shopping enthusiasts, and business travelers.",
+      highlights_title: "Accommodation Highlights",
+      highlight_1: "<strong>Top Location:</strong> Only <strong>2 km</strong> to the famous Designer Outlet Parndorf.",
+      highlight_2: "<strong>Great Transport Links:</strong> Direct access to the A4 and A6 motorways.",
+      highlight_3: "<strong>Pure Nature:</strong> Only <strong>8 km</strong> to the beautiful Lake Neusiedl.",
+      highlight_4: "<strong>Easy Arrival:</strong> <strong>32 km</strong> to Vienna Airport (VIE).",
+      highlight_5: "<strong>Comfort:</strong> Bakery nearby, free Wi-Fi, and a **private parking space** right at your doorstep.",
+      apartment_p2: "Our apartment has a fully equipped kitchen and a stylish interior that invites you to relax.",
+      booking_button: "Booking.com",
+      airbnb_button: "Airbnb",
+      host_title: "Your Host",
+      alt_host: "Photo of the host of the Holiday Apartment Parndorf",
+      host_quote: '"I look forward to welcoming you personally and ensuring you have an unforgettable stay."',
+      location_title: "Location & Surroundings",
+      aria_map: "Google Maps card with the location of the Holiday Apartment Parndorf",
+      footer_imprint_title: "Imprint",
+      country: "Austria",
+      footer_contact_title: "Contact",
+      phone: "Phone",
+    }
+  };
+
+  const languageSelector = document.querySelector('.language-selector');
+  const flags = languageSelector.querySelectorAll('img');
+
+  const setLanguage = (lang) => {
+    // 1. Update text content
+    document.querySelectorAll('[data-translate]').forEach(element => {
+      const key = element.getAttribute('data-translate');
+      if (translations[lang][key]) {
+        element.innerHTML = translations[lang][key];
+      }
+    });
+
+    // 2. Update attributes (alt, aria-label, content)
+    document.querySelectorAll('[data-translate-attr]').forEach(element => {
+        const attrs = element.getAttribute('data-translate-attr').split(';');
+        attrs.forEach(attrData => {
+            const [attrName, key] = attrData.split(':').map(s => s.trim());
+            if (translations[lang][key]) {
+                element.setAttribute(attrName, translations[lang][key]);
+            }
+        });
+    });
+
+    // 3. Set page language and save preference
+    document.documentElement.lang = lang;
+    localStorage.setItem('language', lang);
+
+    // 4. Update active flag style
+    flags.forEach(flag => {
+      flag.classList.toggle('active', flag.dataset.lang === lang);
+    });
+  };
+
+  // Event listener for flag clicks
+  flags.forEach(flag => {
+    flag.addEventListener('click', (event) => {
+      const selectedLang = event.target.getAttribute('data-lang');
+      setLanguage(selectedLang);
+    });
+  });
+
+  // Initial language detection on page load
+  const savedLang = localStorage.getItem('language');
+  const browserLang = navigator.language.substring(0, 2);
+
+  // Use saved language > browser language > default (German)
+  let initialLang = 'de';
+  if (savedLang && translations[savedLang]) {
+      initialLang = savedLang;
+  } else if (browserLang && translations[browserLang]) {
+      initialLang = browserLang;
+  }
+
+  setLanguage(initialLang);
 });
 </script>
 
