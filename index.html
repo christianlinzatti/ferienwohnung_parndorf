@@ -38,7 +38,7 @@
     text-align: center; 
     border-radius: 0 0 20px 20px; 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    position: relative; /* Für die Positionierung der Flaggen */
+    position: relative;
   }
   main {
     max-width: 1100px;
@@ -46,7 +46,7 @@
     padding: 0 20px;
   }
 
-  /* --- NEU: Sprachauswahl --- */
+  /* Sprachauswahl */
   .language-selector {
     position: absolute;
     top: 20px;
@@ -69,7 +69,6 @@
   .language-selector img.active {
     box-shadow: 0 0 0 3px var(--primary-color);
   }
-  /* -------------------------- */
 
   /* Slideshow */
   .slideshow-container {
@@ -85,7 +84,7 @@
     height: 550px;
     object-fit: cover;
     display: none;
-    cursor: pointer; /* Macht das Bild klickbar */
+    cursor: pointer;
   }
   .slide.active {
     display: block;
@@ -113,9 +112,9 @@
   .btn-prev { left: 15px; }
   .btn-next { right: 15px; }
  
-  /* --- NEU: Lightbox-Ansicht für Fotos --- */
+  /* Lightbox-Ansicht für Fotos */
   .lightbox {
-    display: none; /* Standardmäßig versteckt */
+    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -126,6 +125,7 @@
     background-color: rgba(0,0,0,0.9);
     align-items: center;
     justify-content: center;
+    flex-direction: column; /* Um Caption zu platzieren */
   }
   .lightbox-content {
     margin: auto;
@@ -139,6 +139,15 @@
   }
   .lightbox-content:hover {
     transform: scale(1.01);
+  }
+  /* NEU: Style für die Bildunterschrift */
+  .lightbox-caption {
+    margin-top: 15px;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 0 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Bessere Lesbarkeit auf hellen Bildern */
   }
   /* --------------------------------------- */
 
@@ -306,6 +315,7 @@
  
     <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <img class="lightbox-content" id="lightbox-image" />
+    <p id="lightbox-caption" class="lightbox-caption"></p>
   </div>
     <div class="main-content-grid">
     <section class="content-box">
@@ -373,6 +383,7 @@
   const btnNext = document.querySelector('.btn-next');
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-image');
+  const lightboxCaption = document.getElementById('lightbox-caption'); // NEU: Caption-Element
 
   let currentIndex = 0;
   let slideInterval;
@@ -413,29 +424,37 @@
 
   startInterval();
 
-  // NEU: Funktion zum Öffnen der Lightbox
-  function openLightbox(imageSrc) {
+  // Funktion zum Öffnen der Lightbox
+  function openLightbox(imageSrc, captionText) { // NEU: captionText als Parameter
     lightboxImage.src = imageSrc;
-    lightbox.style.display = 'flex'; // 'flex' sorgt für die Zentrierung
+    lightboxCaption.textContent = captionText; // NEU: Caption-Text setzen
+    lightbox.style.display = 'flex';
   }
 
-  // NEU: Funktion zum Schließen der Lightbox
+  // Funktion zum Schließen der Lightbox
   function closeLightbox() {
     lightbox.style.display = 'none';
   }
 
-  // NEU: Event-Listener für das Öffnen der Lightbox
+  // Event-Listener für das Öffnen der Lightbox
   slides.forEach(slide => {
     slide.addEventListener('click', (event) => {
-      openLightbox(event.target.src);
+      const imageSrc = event.target.src;
+      const captionText = event.target.alt; // NEU: Alt-Text als Caption-Text verwenden
+      openLightbox(imageSrc, captionText);
     });
   });
   
-  // NEU: Schließen der Lightbox bei Klick auf das Bild oder den Hintergrund
+  // Schließen der Lightbox bei Klick auf den Hintergrund
   lightbox.addEventListener('click', (event) => {
-    if (event.target === lightbox || event.target === lightboxImage) {
+    if (event.target === lightbox) {
       closeLightbox();
     }
+  });
+
+  // Hinzufügen eines Event-Listeners für das Bild selbst, um es auch zu schließen
+  lightboxImage.addEventListener('click', () => {
+    closeLightbox();
   });
 </script>
 
@@ -448,7 +467,6 @@
       disableDefaultUI: true,
     });
     
-    // ===== HIER IST DIE ÄNDERUNG =====
     const contentString = `
       <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
         <h3 style="margin: 0 0 5px; color: var(--secondary-color);"><a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-color); text-decoration: none;">Ferienwohnung Parndorf</a></h3>
