@@ -141,26 +141,33 @@
     gap: 15px;
     justify-content: center;
   }
-  a.booking-btn, a.airbnb-btn {
-    display: inline-block;
-    color: white;
+  .booking-btn, .airbnb-btn {
     padding: 15px 30px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     transition: transform 0.2s, background-color 0.2s;
+    background: var(--accent-booking);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  a.booking-btn { background: var(--accent-booking); }
-  a.airbnb-btn { background: var(--accent-airbnb); }
-  a.booking-btn:hover, a.airbnb-btn:hover {
+  .airbnb-btn {
+    background: var(--accent-airbnb);
+  }
+  .booking-btn:hover, .airbnb-btn:hover {
     transform: translateY(-2px);
     opacity: 0.9;
   }
   .booking-logo, .airbnb-logo {
-    height: 40px; /* Anpassen der Größe der Logos */
+    height: 30px;
     width: auto;
-    margin: 0 10px;
+    filter: invert(1);
+  }
+  .airbnb-logo {
+    filter: none;
   }
 
   /* Map */
@@ -251,11 +258,13 @@
       <p>Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.</p>
 
       <div class="booking-buttons">
-        <a href="https://www.booking.com/hotel/at/ferienwohnung-parndorf.de.html" target="_blank" rel="noopener noreferrer" class="booking-btn" aria-label="Buchen auf Booking.com">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Booking.com_Icon_2022.svg" alt="Booking.com Logo" class="booking-logo" />
+        <a href="https://www.booking.com/hotel/at/ferienwohnung-parndorf.de.html" target="_blank" rel="noopener noreferrer" class="booking-btn">
+          <img src="https://booking.com/favicon.ico?v2" alt="Booking.com Logo" class="booking-logo" />
+          <span>Booking.com</span>
         </a>
-        <a href="https://www.airbnb.at/rooms/12345678" target="_blank" rel="noopener noreferrer" class="airbnb-btn" aria-label="Buchen auf Airbnb">
+        <a href="https://www.airbnb.at/rooms/12345678" target="_blank" rel="noopener noreferrer" class="airbnb-btn">
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb Logo" class="airbnb-logo" />
+          <span>Airbnb</span>
         </a>
       </div>
     </section>
@@ -373,7 +382,7 @@
   }
 </script>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap">
 </script>
 </body>
 </html>
