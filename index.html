@@ -45,8 +45,6 @@
     margin: 20px auto;
     padding: 0 20px;
   }
-
-  /* Sprachauswahl */
   .language-selector {
     position: absolute;
     top: 20px;
@@ -69,8 +67,6 @@
   .language-selector img.active {
     box-shadow: 0 0 0 3px var(--primary-color);
   }
-
-  /* Slideshow */
   .slideshow-container {
     position: relative;
     max-width: 1100px;
@@ -111,8 +107,6 @@
   }
   .btn-prev { left: 15px; }
   .btn-next { right: 15px; }
- 
-  /* Lightbox-Ansicht für Fotos */
   .lightbox {
     display: none;
     position: fixed;
@@ -125,7 +119,7 @@
     background-color: rgba(0,0,0,0.9);
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Um Caption zu platzieren */
+    flex-direction: column;
   }
   .lightbox-content {
     margin: auto;
@@ -140,18 +134,14 @@
   .lightbox-content:hover {
     transform: scale(1.01);
   }
-  /* NEU: Style für die Bildunterschrift */
   .lightbox-caption {
     margin-top: 15px;
     color: white;
     font-size: 1.2rem;
     text-align: center;
     padding: 0 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Bessere Lesbarkeit auf hellen Bildern */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
-  /* --------------------------------------- */
-
-  /* Content Grid */
   .main-content-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -186,8 +176,6 @@
     color: #555;
     margin-top: 10px;
   }
-  
-  /* Highlights & Booking */
   .highlights-list {
     list-style: none;
     padding-left: 0;
@@ -236,8 +224,6 @@
   .airbnb-logo {
     filter: none;
   }
-
-  /* Map */
   .map-container {
     margin-bottom: 30px;
     padding: 20px;
@@ -257,8 +243,6 @@
     border-radius: 8px;
     margin-top: 8px;
   }
-
-  /* Footer */
   footer {
     background: var(--secondary-color);
     color: #ddd;
@@ -313,11 +297,12 @@
     <button class="btn-next" data-translate-attr="aria-label:aria_next_slide">❯</button>
   </div>
  
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <img class="lightbox-content" id="lightbox-image" />
     <p id="lightbox-caption" class="lightbox-caption"></p>
   </div>
-    <div class="main-content-grid">
+
+  <div class="main-content-grid">
     <section class="content-box">
       <h2 data-translate="apartment_title">Ihr gemütliches Apartment in Parndorf</h2>
       <p data-translate="apartment_p1">Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.</p>
@@ -383,7 +368,7 @@
   const btnNext = document.querySelector('.btn-next');
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightbox-image');
-  const lightboxCaption = document.getElementById('lightbox-caption'); // NEU: Caption-Element
+  const lightboxCaption = document.getElementById('lightbox-caption');
 
   let currentIndex = 0;
   let slideInterval;
@@ -424,35 +409,30 @@
 
   startInterval();
 
-  // Funktion zum Öffnen der Lightbox
-  function openLightbox(imageSrc, captionText) { // NEU: captionText als Parameter
+  function openLightbox(imageSrc, captionText) {
     lightboxImage.src = imageSrc;
-    lightboxCaption.textContent = captionText; // NEU: Caption-Text setzen
+    lightboxCaption.textContent = captionText;
     lightbox.style.display = 'flex';
   }
 
-  // Funktion zum Schließen der Lightbox
   function closeLightbox() {
     lightbox.style.display = 'none';
   }
 
-  // Event-Listener für das Öffnen der Lightbox
   slides.forEach(slide => {
     slide.addEventListener('click', (event) => {
       const imageSrc = event.target.src;
-      const captionText = event.target.alt; // NEU: Alt-Text als Caption-Text verwenden
+      const captionText = event.target.alt;
       openLightbox(imageSrc, captionText);
     });
   });
   
-  // Schließen der Lightbox bei Klick auf den Hintergrund
   lightbox.addEventListener('click', (event) => {
     if (event.target === lightbox) {
       closeLightbox();
     }
   });
 
-  // Hinzufügen eines Event-Listeners für das Bild selbst, um es auch zu schließen
   lightboxImage.addEventListener('click', () => {
     closeLightbox();
   });
@@ -482,7 +462,6 @@
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap"></script>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -560,7 +539,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const flags = languageSelector.querySelectorAll('img');
 
   const setLanguage = (lang) => {
-    // 1. Update text content
     document.querySelectorAll('[data-translate]').forEach(element => {
       const key = element.getAttribute('data-translate');
       if (translations[lang][key]) {
@@ -568,7 +546,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 2. Update attributes (alt, aria-label, content)
     document.querySelectorAll('[data-translate-attr]').forEach(element => {
         const attrs = element.getAttribute('data-translate-attr').split(';');
         attrs.forEach(attrData => {
@@ -579,17 +556,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Set page language and save preference
     document.documentElement.lang = lang;
     localStorage.setItem('language', lang);
 
-    // 4. Update active flag style
     flags.forEach(flag => {
       flag.classList.toggle('active', flag.dataset.lang === lang);
     });
   };
 
-  // Event listener for flag clicks
   flags.forEach(flag => {
     flag.addEventListener('click', (event) => {
       const selectedLang = event.target.getAttribute('data-lang');
@@ -597,11 +571,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initial language detection on page load
   const savedLang = localStorage.getItem('language');
   const browserLang = navigator.language.substring(0, 2);
 
-  // Use saved language > browser language > default (German)
   let initialLang = 'de';
   if (savedLang && translations[savedLang]) {
       initialLang = savedLang;
