@@ -32,13 +32,13 @@
     color: var(--secondary-color);
   }
   header {
-    background: #e6f2ee; 
-    color: #333; 
-    padding: 40px 20px; 
-    text-align: center; 
-    border-radius: 0 0 20px 20px; 
+    background: #e6f2ee;  
+    color: #333;  
+    padding: 40px 20px;  
+    text-align: center;  
+    border-radius: 0 0 20px 20px;  
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    position: relative; /* Für die Positionierung der Flaggen */
+    position: relative;
   }
   main {
     max-width: 1100px;
@@ -46,7 +46,6 @@
     padding: 0 20px;
   }
 
-  /* --- NEU: Sprachauswahl --- */
   .language-selector {
     position: absolute;
     top: 20px;
@@ -69,9 +68,8 @@
   .language-selector img.active {
     box-shadow: 0 0 0 3px var(--primary-color);
   }
-  /* -------------------------- */
 
-  /* Slideshow */
+  /* --- NEU: Überarbeitete Slideshow-Stile --- */
   .slideshow-container {
     position: relative;
     max-width: 1100px;
@@ -79,15 +77,27 @@
     border-radius: 15px;
     box-shadow: var(--box-shadow);
     overflow: hidden;
+    /* Responsive Höhe basierend auf dem Seitenverhältnis der Bilder */
+    aspect-ratio: 16 / 9; 
+    -webkit-user-select: none; /* Verhindert Textmarkierung beim Swipen */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 550px;
-    object-fit: cover;
-    display: none;
+    height: 100%;
+    object-fit: cover; /* Stellt sicher, dass das Bild den Container füllt */
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out; /* Übergangseffekt */
+    cursor: pointer; /* Zeigt an, dass das Bild klickbar ist */
   }
   .slide.active {
-    display: block;
+    opacity: 1;
+    z-index: 1; /* Stellt sicher, dass das aktive Bild oben ist */
   }
   .btn-prev, .btn-next {
     cursor: pointer;
@@ -105,12 +115,79 @@
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s;
+    z-index: 2; /* Über den Bildern */
   }
   .btn-prev:hover, .btn-next:hover {
     background-color: rgba(0,0,0,0.8);
   }
   .btn-prev { left: 15px; }
   .btn-next { right: 15px; }
+
+  /* --- NEU: Stile für die Navigations-Punkte --- */
+  .dots-container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+  }
+  .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  .dot.active {
+      background-color: white;
+  }
+  .dot:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* --- NEU: Stile für das Popup/Lightbox --- */
+  .popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: none; /* Standardmäßig ausgeblendet */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .popup-container.open {
+      display: flex;
+      opacity: 1;
+  }
+  .popup-img {
+      max-width: 90vw; /* Maximal 90% der Bildschirmbreite */
+      max-height: 90vh; /* Maximal 90% der Bildschirmhöhe */
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+      border-radius: 5px;
+  }
+  .popup-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 1;
+  }
+  .popup-close:hover {
+      color: #ccc;
+  }
 
   /* Content Grid */
   .main-content-grid {
@@ -122,6 +199,11 @@
   @media (max-width: 900px) {
     .main-content-grid {
       grid-template-columns: 1fr;
+    }
+    .btn-prev, .btn-next { /* Kleinere Buttons auf dem Handy */
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
     }
   }
   .content-box {
@@ -212,12 +294,6 @@
     border-radius: 12px;
     margin-top: 15px;
   }
-  .map-popup-image {
-    width: 100%;
-    max-width: 280px;
-    border-radius: 8px;
-    margin-top: 8px;
-  }
 
   /* Footer */
   footer {
@@ -266,12 +342,20 @@
 
 <main>
   <div class="slideshow-container" aria-roledescription="carousel" data-translate-attr="aria-label:aria_carousel">
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275414.jpg?k=57037e4535aa3931e89411578f23ce9167ba3ec1fe3b1c82d1db7447ed5a7e8f&o=" class="slide active" loading="eager" data-translate-attr="alt:alt_living_room" />
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275414.jpg?k=57037e4535aa3931e89411578f23ce9167ba3ec1fe3b1c82d1db7447ed5a7e8f&o=" class="slide" loading="eager" data-translate-attr="alt:alt_living_room" />
     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724267371.jpg?k=4f765f7568ba361c297ccbfda637ad9b9ed779d32f431bf299e99143dd3feb8f&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bedroom" />
     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275418.jpg?k=482ed5678077e79049f67f844bc0c8ae8ae251418ea8ed73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_kitchen" />
     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275415.jpg?k=1e6d7f10d2297ced0b212a9945ea356aa4a0c920581ee73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bathroom" />
+    
     <button class="btn-prev" data-translate-attr="aria-label:aria_prev_slide">❮</button>
     <button class="btn-next" data-translate-attr="aria-label:aria_next_slide">❯</button>
+    
+    <div class="dots-container"></div>
+  </div>
+
+  <div class="popup-container">
+    <span class="popup-close">&times;</span>
+    <img src="" class="popup-img" alt="Vergrößerte Ansicht">
   </div>
 
   <div class="main-content-grid">
@@ -288,7 +372,7 @@
         <li data-translate="highlight_5"><strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.</li>
       </ul>
 
-      <p data-translate="apartment_p2">Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.</p>
+      <p data-translate="apartment_p2">Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspanneneinlädt.</p>
 
       <div class="booking-buttons">
         <a href="https://www.booking.com/hotel/at/ferienwohnung-parndorf.de.html" target="_blank" rel="noopener noreferrer" class="booking-btn">
@@ -335,47 +419,135 @@
 </footer>
 
 <script>
-  const slides = document.querySelectorAll('.slideshow-container .slide');
-  const btnPrev = document.querySelector('.btn-prev');
-  const btnNext = document.querySelector('.btn-next');
-  let currentIndex = 0;
-  let slideInterval;
+document.addEventListener('DOMContentLoaded', () => {
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    const slides = document.querySelectorAll('.slideshow-container .slide');
+    const btnPrev = document.querySelector('.btn-prev');
+    const btnNext = document.querySelector('.btn-next');
+    const dotsContainer = document.querySelector('.dots-container');
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.display = i === index ? 'block' : 'none';
+    // Popup-Elemente
+    const popupContainer = document.querySelector('.popup-container');
+    const popupImg = document.querySelector('.popup-img');
+    const popupClose = document.querySelector('.popup-close');
+    
+    let currentIndex = 0;
+    let slideInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // --- Initialisierung ---
+    function init() {
+        // Navigations-Punkte erstellen
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            dot.addEventListener('click', () => {
+                showSlide(i);
+                resetInterval();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        // Event Listener für Popup
+        slides.forEach((slide, index) => {
+            slide.addEventListener('click', () => openPopup(index));
+        });
+
+        // Erstes Bild anzeigen
+        showSlide(currentIndex);
+        startInterval();
+    }
+
+    // --- Kernfunktion zum Anzeigen eines Slides ---
+    function showSlide(index) {
+        // Alte aktive Klassen entfernen
+        const currentActiveSlide = document.querySelector('.slide.active');
+        const currentActiveDot = document.querySelector('.dot.active');
+        if (currentActiveSlide) currentActiveSlide.classList.remove('active');
+        if (currentActiveDot) currentActiveDot.classList.remove('active');
+
+        // Index aktualisieren
+        currentIndex = index;
+
+        // Neue aktive Klassen setzen
+        slides[currentIndex].classList.add('active');
+        dotsContainer.children[currentIndex].classList.add('active');
+    }
+
+    // --- Navigationsfunktionen ---
+    function nextSlide() {
+        const newIndex = (currentIndex + 1) % slides.length;
+        showSlide(newIndex);
+    }
+
+    function prevSlide() {
+        const newIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(newIndex);
+    }
+    
+    // --- Automatischer Wechsel ---
+    function startInterval() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+    function resetInterval() {
+        clearInterval(slideInterval);
+        startInterval();
+    }
+    
+    // --- Event Listener für Buttons ---
+    btnNext.addEventListener('click', () => {
+        nextSlide();
+        resetInterval();
     });
-  }
-  showSlide(currentIndex);
+    btnPrev.addEventListener('click', () => {
+        prevSlide();
+        resetInterval();
+    });
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }
+    // --- Swipe-Funktionalität ---
+    slideshowContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
 
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
-  }
+    slideshowContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) { // Swipe nach links
+            nextSlide();
+            resetInterval();
+        }
+        if (touchEndX > touchStartX + 50) { // Swipe nach rechts
+            prevSlide();
+            resetInterval();
+        }
+    }
 
-  btnNext.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-  });
-  btnPrev.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
+    // --- Popup-Funktionalität ---
+    function openPopup(index) {
+        popupImg.src = slides[index].src;
+        popupContainer.classList.add('open');
+        clearInterval(slideInterval); // Pausiere Slideshow bei offenem Popup
+    }
 
-  function startInterval() {
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-  function resetInterval() {
-    clearInterval(slideInterval);
-    startInterval();
-  }
+    function closePopup() {
+        popupContainer.classList.remove('open');
+        startInterval(); // Starte Slideshow wieder
+    }
+    
+    popupClose.addEventListener('click', closePopup);
+    popupContainer.addEventListener('click', (e) => {
+        if (e.target === popupContainer) { // Schließen bei Klick auf Hintergrund
+            closePopup();
+        }
+    });
 
-  startInterval();
+    // Slideshow starten
+    init();
+});
 </script>
 
 <script>
@@ -387,7 +559,6 @@
       disableDefaultUI: true,
     });
     
-    // ===== HIER IST DIE ÄNDERUNG =====
     const contentString = `
       <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
         <h3 style="margin: 0 0 5px; color: var(--secondary-color);"><a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-color); text-decoration: none;">Ferienwohnung Parndorf</a></h3>
@@ -403,7 +574,6 @@
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap"></script>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
