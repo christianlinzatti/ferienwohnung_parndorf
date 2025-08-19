@@ -284,44 +284,68 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open('https://www.airbnb.at/rooms/24131580', '_blank');
     });
 });
+const loadMapBtn = document.getElementById('load-map-btn');
+    const mapPlaceholder = document.getElementById('map-placeholder');
+    const mapContainer = document.getElementById('map');
+    let mapInitialized = false;
 
-// --- GOOGLE MAPS API FUNCTION ---
-// This function must be in the global scope to be found by the API callback
-function initMap() {
-    const location = { lat: 48.0007115, lng: 16.8640465 };
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: location,
-        disableDefaultUI: true,
-        mapId: "1f521e152f97485fa96f0a37" 
-    });
+    const loadGoogleMapsScript = () => {
+        if (document.querySelector('script[src*="maps.googleapis.com"]')) {
+            // Skript ist bereits geladen oder wird geladen
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap&v=beta&libraries=marker`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    };
 
-    const contentString = `
-      <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
-        <h3 style="margin: 0 0 5px; color: #004d40;">
-          <a href="https://maps.google.com/?q=Ferienwohnung%20Parndorf"
-             target="_blank" rel="noopener noreferrer"
-             style="color: #004d40; text-decoration: none;">
-            Ferienwohnung Parndorf
-          </a>
-        </h3>
-        <p style="margin: 0 0 10px; font-size: 14px;">Obere Wunkau 38, 7111 Parndorf</p>
-        <p style="margin-top:10px; font-size: 14px;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung%20Parndorf"
-             target="_blank" rel="noopener noreferrer"
-             style="color: #c8a97e; text-decoration: none; font-weight: bold;">
-            Route planen
-          </a>
-        </p>
-      </div>`;
+    window.initMap = () => {
+        const location = { lat: 48.0007115, lng: 16.8640465 };
+        const map = new google.maps.Map(mapContainer, {
+            zoom: 15,
+            center: location,
+            disableDefaultUI: true,
+            mapId: "1f521e152f97485fa96f0a37" 
+        });
 
-    const infowindow = new google.maps.InfoWindow({ content: contentString });
-    const marker = new google.maps.marker.AdvancedMarkerElement({
-        position: location,
-        map: map,
-        title: "Ferienwohnung Parndorf",
-    });
+        const contentString = `
+            <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
+                <h3 style="margin: 0 0 5px; color: #004d40;">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ferienwohnung+Parndorf,Obere+Wunkau+38,7111+Parndorf" target="_blank" rel="noopener noreferrer" style="color: #004d40; text-decoration: none;">
+                        Ferienwohnung Parndorf
+                    </a>
+                </h3>
+                <p style="margin: 0 0 10px; font-size: 14px;">Obere Wunkau 38, 7111 Parndorf</p>
+                <p style="margin-top:10px; font-size: 14px;">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung+Parndorf,Obere+Wunkau+38,7111+Parndorf" target="_blank" rel="noopener noreferrer" style="color: #0071c2; text-decoration: none; font-weight: bold;">
+                        Route planen
+                    </a>
+                </p>
+            </div>`;
 
-    marker.addListener("click", () => infowindow.open(map, marker));
-    infowindow.open(map, marker);
+        const infowindow = new google.maps.InfoWindow({ content: contentString });
+        const marker = new google.maps.marker.AdvancedMarkerElement({
+            position: location,
+            map: map,
+            title: "Ferienwohnung Parndorf",
+        });
+
+        marker.addListener("click", () => infowindow.open(map, marker));
+        infowindow.open(map, marker);
+
+        mapPlaceholder.style.display = 'none';
+        mapContainer.style.display = 'block';
+    };
+
+    if (loadMapBtn) {
+        loadMapBtn.addEventListener('click', () => {
+            if (!mapInitialized) {
+                mapInitialized = true;
+                loadGoogleMapsScript();
+            }
+        });
+    }
+
 }
