@@ -884,27 +884,49 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
   function initMap() {
     const location = { lat: 48.0007115, lng: 16.8640465 };
+
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 15,
       center: location,
       disableDefaultUI: true,
+      mapId: "DEMO_MAP_ID" // required for AdvancedMarkerElement
     });
-    
+
     const contentString = `
       <div style="max-width:280px; font-family: 'Poppins', sans-serif;">
-        <h3 style="margin: 0 0 5px; color: var(--secondary-color);"><a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-color); text-decoration: none;">Ferienwohnung Parndorf</a></h3>
+        <h3 style="margin: 0 0 5px; color: var(--secondary-color);">
+          <a href="https://www.google.com/maps/place/Ferienwohnung+Parndorf/@48.0007151,16.8614716,17z/data=!3m1!4b1!4m6!3m5!1s0x476c5d0390a66581:0x68e4fd689bd6c3b5!8m2!3d48.0007115!4d16.8640465!16s%2Fg%2F11xrw9r3x_?entry=ttu" 
+             target="_blank" rel="noopener noreferrer" 
+             style="color: var(--secondary-color); text-decoration: none;">
+            Ferienwohnung Parndorf
+          </a>
+        </h3>
         <p style="margin: 0 0 10px; font-size: 14px;">Obere Wunkau 38, 7111 Parndorf</p>
-        <p style="margin-top:10px; font-size: 14px;"><a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung+Parndorf" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: none; font-weight: bold;">Route planen</a></p>
+        <p style="margin-top:10px; font-size: 14px;">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Ferienwohnung+Parndorf" 
+             target="_blank" rel="noopener noreferrer" 
+             style="color: var(--primary-color); text-decoration: none; font-weight: bold;">
+            Route planen
+          </a>
+        </p>
       </div>`;
 
     const infowindow = new google.maps.InfoWindow({ content: contentString });
-    const marker = new google.maps.Marker({ position: location, map, title: "Ferienwohnung Parndorf" });
+
+    // New Advanced Marker
+    const marker = new google.maps.marker.AdvancedMarkerElement({
+      position: location,
+      map: map,
+      title: "Ferienwohnung Parndorf",
+    });
 
     marker.addListener("click", () => infowindow.open(map, marker));
     infowindow.open(map, marker);
   }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap"></script>
+
+<!-- Important: mapId required, set one in your Google Cloud Console -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap&v=beta"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
