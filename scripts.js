@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const script = document.createElement('script');
         // ACHTUNG: Es ist unsicher, deinen API-Key direkt im Code zu haben. Besser wäre es, diesen serverseitig zu schützen.
-        script.src = `https://maps.googleapis.com/maps/api/js?key=DEIN_API_KEY&callback=initMap&v=beta&libraries=marker`;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAj3BUffMoTz7XsXEjJvnO-CBQq9oDQ4AA&callback=initMap&v=beta&libraries=marker`;
         script.async = true;
         document.head.appendChild(script);
     };
