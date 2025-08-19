@@ -440,3 +440,35 @@
 .airbnb-superhost-container {
 max-width: 900px !important;
 }
+
+header h1 {
+    margin: 0;
+    font-weight: 700;
+    color: #004d40;
+    font-size: 2.5em;
+}
+
+header p {
+    margin-top: 5px;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+/* Stil für die aktive Sprachauswahl */
+.language-selector img {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease-in-out;
+    width: 30px; /* Beispielgröße */
+    margin: 0 5px;
+}
+
+.language-selector img:hover {
+    opacity: 1;
+}
+
+.language-selector img.active {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    border-radius: 50%;
+}
