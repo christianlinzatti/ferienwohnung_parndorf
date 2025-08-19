@@ -116,23 +116,26 @@
     align-items: center;
     transition: background-color 0.3s;
     z-index: 2; /* Über den Bildern */
+	  animation: pulse 2s infinite; /* Neuer Effekt: Pulsieren */
+
   }
   .btn-prev:hover, .btn-next:hover {
     background-color: rgba(0,0,0,0.8);
+  animation: none; /* Deaktiviere das Pulsieren beim Überfahren */
   }
   .btn-prev { left: 15px; }
   .btn-next { right: 15px; }
 
   /* --- NEU: Stile für die Navigations-Punkte --- */
-  .dots-container {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 2;
-  }
+.dots-container {
+    position: absolute;
+    bottom: 60px; /* Geändert von 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
   .dot {
       width: 12px;
       height: 12px;
@@ -143,7 +146,7 @@
       transition: background-color 0.3s;
   }
   .dot.active {
-      background-color: white;
+      background-color: blue;
   }
   .dot:hover {
       background-color: rgba(255, 255, 255, 0.9);
@@ -251,6 +254,13 @@
     gap: 15px;
     justify-content: center;
   }
+  
+  @keyframes pulse {
+  0% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.05); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+  
   .booking-btn, .airbnb-btn {
     padding: 15px 30px;
     border-radius: 30px;
@@ -327,6 +337,137 @@
   .footer-content a:hover {
     text-decoration: underline;
   }
+  
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Erhöhe die Dauer auf 1 Sekunde für einen sanfteren Effekt */
+    cursor: pointer; /* Zeigt an, dass das Bild klickbar ist */
+}
+
+
+/* NEU: Bild-Styling angepasst, da es jetzt im .slide-div ist */
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Stellt sicher, dass das Bild den Container füllt */
+	transform: scale(1.05); /* Leichter Zoom-in am Anfang */
+  transition: transform 3s ease-in-out, opacity 1s ease-in-out; /* Füge den Übergang für den Zoom-Effekt hinzu */
+}
+.slide.active {
+    opacity: 1;
+    z-index: 1; /* Stellt sicher, dass das aktive Bild oben ist */
+	  transform: scale(1); /* Bild geht zurück zur Originalgröße */
+
+}
+
+/* NEU: Styling für die Bildunterschrift */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Dunkler, halbtransparenter Hintergrund */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 1em;
+	opacity: 0; /* Standardmäßig unsichtbar */
+  transition: opacity 0.5s ease-in-out; /* Kurzer Fade-in für den Text */
+    z-index: 2; /* Stellt sicher, dass der Text über dem Bild liegt */
+    box-sizing: border-box; /* Verhindert, dass Padding die Breite beeinflusst */
+}
+
+.slide.active .slide-caption {
+  opacity: 1; /* Zeige den Text, wenn die Folie aktiv ist */
+}
+
+.ausstattung {
+    padding: 60px 20px;
+    background: var(--background-light);
+    text-align: center;
+    border-radius: 15px;
+    margin: 30px auto;
+    box-shadow: var(--box-shadow);
+}
+
+.ausstattung h2 {
+    font-size: 2.2em;
+    margin-bottom: 40px;
+}
+
+.ausstattung .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    justify-items: center;
+}
+
+.ausstattung .item {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 250px;
+}
+
+.ausstattung .item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.ausstattung .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.ausstattung .icon {
+    width: 40px;
+    height: 40px;
+    fill: white; /* Weiße Icons auf farbigem Kreis */
+}
+
+.ausstattung span {
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.clickable-div {
+  cursor: pointer;
+  width: 100%;
+  display: block;  /* Stellt sicher, dass das Div ein Block-Element ist */
+  margin: 0 auto;  /* Zentriert das Element horizontal */
+}
+
+.host-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.airbnb-superhost-container {
+max-width: 900px !important;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -342,10 +483,61 @@
 
 <main>
   <div class="slideshow-container" aria-roledescription="carousel" data-translate-attr="aria-label:aria_carousel">
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275414.jpg?k=57037e4535aa3931e89411578f23ce9167ba3ec1fe3b1c82d1db7447ed5a7e8f&o=" class="slide" loading="eager" data-translate-attr="alt:alt_living_room" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724267371.jpg?k=4f765f7568ba361c297ccbfda637ad9b9ed779d32f431bf299e99143dd3feb8f&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bedroom" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275418.jpg?k=482ed5678077e79049f67f844bc0c8ae8ae251418ea8ed73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_kitchen" />
-    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/724275415.jpg?k=1e6d7f10d2297ced0b212a9945ea356aa4a0c920581ee73d70a54ec306bcd531&o=" class="slide" loading="lazy" data-translate-attr="alt:alt_bathroom" />
+    
+    <div class="slide">
+      <img src="wohnzimmer.jpg" loading="eager" data-translate-attr="alt:alt_living_room" />
+      <div class="slide-caption" data-translate="alt_living_room">Gemütliches Wohnzimmer mit bequemer Couch</div>
+    </div>
+
+    <div class="slide">
+      <img src="schlafzimmer.jpg" loading="lazy" data-translate-attr="alt:alt_bedroom" />
+      <div class="slide-caption" data-translate="caption_bedroom">Schlafzimmer</div>
+    </div>
+	
+	<div class="slide">
+      <img src="betten.jpg" loading="lazy" data-translate-attr="alt:alt_bed" />
+      <div class="slide-caption" data-translate="alt_bed">Bett</div>
+    </div>
+	
+	<div class="slide">
+      <img src="bett_kasten.jpg" loading="lazy" data-translate-attr="alt:alt_bed" />
+      <div class="slide-caption" data-translate="alt_bed">Bett</div>
+    </div>
+
+    <div class="slide">
+      <img src="kueche.jpg" loading="lazy" data-translate-attr="alt:alt_kitchen" />
+      <div class="slide-caption" data-translate="caption_kitchen">Küche</div>
+    </div>
+
+    <div class="slide">
+      <img src="badezimmer.jpg" loading="lazy" data-translate-attr="alt:alt_bathroom" />
+      <div class="slide-caption" data-translate="caption_bathroom">Badezimmer</div>
+    </div>
+	
+	<div class="slide">
+      <img src="eingangsbereich.jpg" loading="lazy" data-translate-attr="alt:alt_enter" />
+      <div class="slide-caption" data-translate="alt_enter">Eingangsbereich</div>
+    </div>
+	
+	<div class="slide">
+      <img src="essbereich.jpg" loading="lazy" data-translate-attr="alt:alt_eating" />
+      <div class="slide-caption" data-translate="alt_eating">Esstisch</div>
+    </div>
+	
+	<div class="slide">
+      <img src="wc.jpg" loading="lazy" data-translate-attr="alt:alt_wc" />
+      <div class="slide-caption" data-translate="alt_wc">WC</div>
+    </div>
+	
+	<div class="slide">
+      <img src="terrasse.jpg" loading="lazy" data-translate-attr="alt:alt_terrace" />
+      <div class="slide-caption" data-translate="alt_terrace">Terrasse</div>
+    </div>
+	
+	<div class="slide">
+      <img src="garten.jpg" loading="lazy" data-translate-attr="alt:alt_garden" />
+      <div class="slide-caption" data-translate="alt_garden">Garten</div>
+    </div>
     
     <button class="btn-prev" data-translate-attr="aria-label:aria_prev_slide">❮</button>
     <button class="btn-next" data-translate-attr="aria-label:aria_next_slide">❯</button>
@@ -369,7 +561,7 @@
         <li data-translate="highlight_2"><strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.</li>
         <li data-translate="highlight_3"><strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.</li>
         <li data-translate="highlight_4"><strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).</li>
-        <li data-translate="highlight_5"><strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.</li>
+        <li data-translate="highlight_5"><strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein <strong>privater Parkplatz</strong> direkt vor der Haustüre.</li>
       </ul>
 
       <p data-translate="apartment_p2">Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspanneneinlädt.</p>
@@ -379,7 +571,7 @@
           <img src="Booking.com_logo.svg" alt="Booking.com Logo" class="booking-logo" />
           <span data-translate="booking_button">Booking.com</span>
         </a>
-        <a href="https://www.airbnb.ca/rooms/24131580" target="_blank" rel="noopener noreferrer" class="airbnb-btn">
+        <a href="https://www.airbnb.at/rooms/24131580" target="_blank" rel="noopener noreferrer" class="airbnb-btn">
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg" alt="Airbnb Logo" class="airbnb-logo" />
           <span data-translate="airbnb_button">Airbnb</span>
         </a>
@@ -388,11 +580,140 @@
 
     <aside class="host-section content-box">
       <h2 data-translate="host_title">Ihre Gastgeberin</h2>
-      <img src="https://cf.bstatic.com/xdata/images/xphoto/max500_ao/558254115.jpg?k=c656692602b8801c33a24397289df9206a86476fc308185b95b7c90300533d01&o=" class="host-image" loading="lazy" data-translate-attr="alt:alt_host"/>
-      <p class="host-name">Gabi</p>
+	  <div id="airbnb-superhost-widget-24131580" title="Airbnb Bewertungen" class="clickable-div"></div>
       <p class="host-text" data-translate="host_quote">"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen."</p>
     </aside>
   </div>
+        
+
+  
+<section class="ausstattung">
+  <h3>Unsere Ausstattung</h3>
+  <div class="grid">
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 3C7.03 3 2.73 6.11 1 10.5l2.17.83C4.56 8.25 8.03 6 12 6s7.44 2.25 8.83 5.33L23 10.5C21.27 6.11 16.97 3 12 3zM12 9c-2.21 0-4.21 1.21-5.19 3h2.45c.73-.6 1.72-1 2.74-1s2.01.4 2.74 1h2.45c-.98-1.79-2.98-3-5.19-3zm0 4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      </div>
+      <span>WLAN</span>
+    </div>
+	
+	<div class="item">
+	<div class="icon-wrapper">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 10V7a3 3 0 016 0v3h4V7a3 3 0 016 0v3h2v10H2V10h2zm2 0h4V7a1 1 0 00-2 0v3H6zm10 0h4V7a1 1 0 00-2 0v3h-2z"/>
+      </svg>
+	  </div>
+            <span>2 Schlafzimmer</span>
+    </div>
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+          
+  <path d="M21 17H3V5h18v12zM0 0h24v24H0z" fill="none"/>
+  <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+
+
+        </svg>
+      </div>
+      <span>Fernseher</span>
+    </div>
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+         <path d="M0 0h24v24H0z" fill="none"/>
+  <path d="M18 2H6c-1.1 0-2 .9-2 2v18h16V4c0-1.1-.9-2-2-2zm0 18H6V4h12v16zM8 6h8v2H8V6z"/>
+</svg>
+
+        </svg>
+      </div>
+      <span>Küche</span>
+    </div>
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 12c-1.5 0-3 1-3 3s1.5 4 3 4 3-2 3-4-1.5-3-3-3zm-5-1.5a2 2 0 114 0 2 2 0 01-4 0zm10 0a2 2 0 114 0 2 2 0 01-4 0zM7.5 6a1.5 1.5 0 110 3 1.5 1.5 0 010-3zm9 0a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
+        </svg>
+      </div>
+      <span>Hundefreundlich</span>
+    </div>
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M12 2a5 5 0 015 5c0 1.5-.66 2.8-1.7 3.7A5 5 0 0117 14a5 5 0 01-10 0c0-1.6.76-3 1.7-3.9A5 5 0 017 7a5 5 0 015-5z"/>
+          <rect x="10" y="13" width="4" height="6"/>
+          <path d="M3 21h18v1H3z"/>
+        </svg>
+      </div>
+      <span>Garten & Terrasse</span>
+    </div>
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+    
+	
+<rect x="2" y="2" width="20" height="20" rx="2" ry="2"/>
+  <text x="12" y="16" text-anchor="middle" font-size="12" font-family="Arial" fill="black">P</text>
+
+
+        </svg>
+      </div>
+      <span>Parkplatz</span>
+    </div>
+
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M20 13H4v-2h16v2z"/>
+        </svg>
+      </div>
+      <span>Barrierefrei</span>
+    </div>
+
+    <div class="item">
+	<div class="icon-wrapper">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M4 3h2v18H4V3zm14 0h2v18h-2V3zM8 10h8v2H8v-2zm0 4h8v2H8v-2z"/>
+      </svg>
+	  </div>
+      <span>Gitterbett & Hochstuhl</span>
+    </div>
+
+
+    <div class="item">
+      <div class="icon-wrapper">
+        <svg class="icon" viewBox="0 0 24 24">
+  <!-- Lautsprecher -->
+  <polygon points="3,9 7,9 12,4 12,20 7,15 3,15" fill="white"/>
+  <!-- Schallwellen -->
+  <path d="M16 8c1 1 2 3 2 4s-1 3-2 4" stroke="white" stroke-width="2" fill="none"/>
+  <!-- Durchgestrichen -->
+  <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2"/>
+
+
+
+
+		  
+		  
+        </svg>
+      </div>
+      <span>Ruhige Lage</span>
+    </div>
+
+  </div>
+</section>
+
+
+
+
 
   <section class="map-container">
     <h2 data-translate="location_title">Lage & Umgebung</h2>
@@ -402,18 +723,24 @@
 
 <footer>
   <div class="footer-content">
-    <section>
-      <h3 data-translate="footer_imprint_title">Impressum</h3>
-      <p>Ferienwohnung Parndorf<br />
-      Inhaberin: Gabriela Linzatti<br />
-      Obere Wunkau 38<br />
-      7111 Parndorf<br />
-      <span data-translate="country">Österreich</span></p>
-    </section>
+    <section class="impressum">
+  <h3 data-translate="footer_imprint_title">Impressum</h3>
+  <address>
+    <strong>Ferienwohnung Parndorf</strong><br>
+    Inhaberin: Gabriela Linzatti<br>
+    <a href="https://www.google.com/maps/search/?api=1&query=Obere+Wunkau+38+7111+Parndorf" target="_blank">
+      Obere Wunkau 38<br>
+      7111 Parndorf
+    </a><br>
+    <span data-translate="country">Österreich</span><br>
+    
+    
+  </address>
+</section>
     <section>
       <h3 data-translate="footer_contact_title">Kontakt</h3>
-      <p>E-Mail: <a href="mailto:ferienwohnung-parndor@gmail.com">ferienwohnung-parndor@gmail.com</a><br />
-      <span data-translate="phone">Telefon</span>: +43 650 412 4810</p>
+      <a href="mailto:ferienwohnung.parndorf@gmail.com">ferienwohnung.parndorf@gmail.com</a><br>
+		<a href="tel:+436504124810">+43 650 412 4810</a>
     </section>
   </div>
 </footer>
@@ -528,10 +855,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Popup-Funktionalität ---
     function openPopup(index) {
-        popupImg.src = slides[index].src;
-        popupContainer.classList.add('open');
-        clearInterval(slideInterval); // Pausiere Slideshow bei offenem Popup
-    }
+    // ÄNDERE DIESE ZEILE:
+    // alt: popupImg.src = slides[index].src;
+    // neu:
+    popupImg.src = slides[index].querySelector('img').src; // Holt sich das Bild aus dem slide-div
+    
+    popupContainer.classList.add('open');
+    clearInterval(slideInterval); // Pausiere Slideshow bei offenem Popup
+}
 
     function closePopup() {
         popupContainer.classList.remove('open');
@@ -585,7 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title_main: "Ferienwohnung Parndorf",
       subtitle: "Ein Zuhause fernab der Heimat",
       aria_carousel: "Bilder der Ferienwohnung Parndorf",
-      alt_living_room: "Gemütliches Wohnzimmer mit bequemer Couch und Fernseher",
+      alt_living_room: "Gemütliches Wohnzimmer mit bequemer Couch",
       alt_bedroom: "Ruhiges Schlafzimmer mit großem Doppelbett",
       alt_kitchen: "Voll ausgestattete, moderne Küche mit Essbereich",
       alt_bathroom: "Helles Badezimmer mit Dusche und WC",
@@ -598,7 +929,7 @@ document.addEventListener('DOMContentLoaded', () => {
       highlight_2: "<strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.",
       highlight_3: "<strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.",
       highlight_4: "<strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).",
-      highlight_5: "<strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein **privater Parkplatz** direkt vor der Haustüre.",
+      highlight_5: "<strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein <strong>privater Parkplatz</strong> direkt vor der Haustüre.",
       apartment_p2: "Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.",
       booking_button: "Booking.com",
       airbnb_button: "Airbnb",
@@ -611,6 +942,28 @@ document.addEventListener('DOMContentLoaded', () => {
       country: "Österreich",
       footer_contact_title: "Kontakt",
       phone: "Telefon",
+	  caption_living_room: "Wohnzimmer",
+    caption_bedroom: "Schlafzimmer",
+    caption_kitchen: "Küche",
+    caption_bathroom: "Badezimmer",
+	alt_bed: "Bett",
+	alt_enter: "Eingang",
+	alt_eating: "Esstisch",
+	alt_wc: "WC",
+	alt_garden: "Garten",
+	alt_terrace: "Terrasse",
+	amenities_title: "Ausstattung & Komfort",
+        amenity_parking: "Privatparkplatz",
+        amenity_wifi: "Kostenloses WLAN",
+        amenity_smart_tv: "Smart-TV",
+        amenity_check_in: "Schlüsselbox (Self-Check-In)",
+        amenity_kitchen: "Voll ausgestattete Küche",
+        amenity_garden: "Garten & Terrasse",
+        amenity_laundry: "Waschmaschine",
+        amenity_hair_dryer: "Haartrockner",
+        amenity_bedrooms: "2 Schlafzimmer",
+        amenity_kids: "Gitterbett & Hochstuhl",
+        amenity_pets: "Hundefreundlich",
     },
     en: {
       document_title: "Holiday Apartment Parndorf - Cozy Flat in a Prime Location",
@@ -631,7 +984,7 @@ document.addEventListener('DOMContentLoaded', () => {
       highlight_2: "<strong>Great Transport Links:</strong> Direct access to the A4 and A6 motorways.",
       highlight_3: "<strong>Pure Nature:</strong> Only <strong>8 km</strong> to the beautiful Lake Neusiedl.",
       highlight_4: "<strong>Easy Arrival:</strong> <strong>32 km</strong> to Vienna Airport (VIE).",
-      highlight_5: "<strong>Comfort:</strong> Bakery nearby, free Wi-Fi, and a **private parking space** right at your doorstep.",
+      highlight_5: "<strong>Comfort:</strong> Bakery nearby, free Wi-Fi, and a <strong>private parking space</strong> right at your doorstep.",
       apartment_p2: "Our apartment has a fully equipped kitchen and a stylish interior that invites you to relax.",
       booking_button: "Booking.com",
       airbnb_button: "Airbnb",
@@ -644,6 +997,28 @@ document.addEventListener('DOMContentLoaded', () => {
       country: "Austria",
       footer_contact_title: "Contact",
       phone: "Phone",
+	  caption_living_room: "Living Room",
+    caption_bedroom: "Bedroom",
+    caption_kitchen: "Kitchen",
+    caption_bathroom: "Bathroom",
+	alt_bed: "Bed",
+	alt_enter: "Entrance",
+	alt_eating: "dining table",
+	alt_wc: "bathroom",
+	alt_garden: "garden",
+	alt_terrace: "terrace",
+	amenities_title: "Amenities & Comfort",
+        amenity_parking: "Private Parking",
+        amenity_wifi: "Free Wi-Fi",
+        amenity_smart_tv: "Smart TV",
+        amenity_check_in: "Key Box (Self-Check-In)",
+        amenity_kitchen: "Fully Equipped Kitchen",
+        amenity_garden: "Garden & Terrace",
+        amenity_laundry: "Washing Machine",
+        amenity_hair_dryer: "Hair Dryer",
+        amenity_bedrooms: "2 Bedrooms",
+        amenity_kids: "Crib & High Chair",
+        amenity_pets: "Pet-Friendly",
     }
   };
 
@@ -703,6 +1078,44 @@ document.addEventListener('DOMContentLoaded', () => {
   setLanguage(initialLang);
 });
 </script>
+
+
+<script>
+  (function () {
+    function loadScript(src, onload) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = onload;
+      s.onerror = function () {
+        console.error('Konnte Script nicht laden:', src);
+      };
+      document.head.appendChild(s);
+    }
+
+    function hideFallback() {
+      var fb = document.getElementById('airbnb-fallback');
+      if (fb) fb.style.display = 'none';
+    }
+
+    function initSuperhost() {
+      if (window.AirbnbSuperhostWidget) {
+        AirbnbSuperhostWidget.create('airbnb-superhost-widget-24131580', '24131580');
+        hideFallback();
+      } else {
+        setTimeout(initSuperhost, 150);
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      loadScript('https://airbnb-proxy.elgordoraba.workers.dev/widget.js', initSuperhost);
+    });
+  })();
+  </script>
+  <script>document.querySelector('.clickable-div').addEventListener('click', function() {
+  // Replace with your desired URL
+  window.location.href = 'https://www.your-link.com';
+});</script>
 
 </body>
 </html>
