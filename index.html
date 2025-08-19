@@ -164,7 +164,14 @@
 
     <section class="map-container">
         <h2 data-translate="location_title">Lage & Umgebung</h2>
-        <div id="map" role="region" data-translate-attr="aria-label:aria_map"></div>
+        <div id="map-placeholder" role="region" data-translate-attr="aria-label:aria_map">
+            <div class="map-overlay">
+                <p data-translate="map_consent_text">Um die Karte anzuzeigen, ist Ihre Zustimmung zum Laden von Inhalten von Google Maps erforderlich. Dabei werden möglicherweise personenbezogene Daten an Google übermittelt.</p>
+                <button id="load-map-btn" class="booking-btn" data-translate="map_consent_button">Karte laden</button>
+            </div>
+            <img src="map-preview.jpg" alt="Vorschau der Lage auf der Karte" class="map-preview-img">
+        </div>
+        <div id="map" style="display: none;"></div>
     </section>
 </main>
 
