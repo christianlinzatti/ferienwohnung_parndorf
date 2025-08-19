@@ -105,27 +105,141 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- TRANSLATION LOGIC ---
     const translations = {
-        de: {
-            document_title: "Ferienwohnung Parndorf - Gemütliches Apartment in Top-Lage",
-            meta_description: "Ferienwohnung Parndorf - gemütliches Apartment in Top-Lage. Nur 2 km vom Designer Outlet entfernt. Ideal für Shopping, Erholung am Neusiedler See und Dienstreisen.",
-            // ... (alle anderen deutschen Übersetzungen) ...
-            country: "Österreich",
-            footer_contact_title: "Kontakt",
-            // ++ HINZUGEFÜGT ++
-            map_consent_text: "Um die Karte anzuzeigen, ist Ihre Zustimmung zum Laden von Inhalten von Google Maps erforderlich. Dabei werden möglicherweise personenbezogene Daten an Google übermittelt.",
-            map_consent_button: "Karte laden"
-        },
-        en: {
-            document_title: "Holiday Apartment Parndorf - Cozy Flat in a Prime Location",
-            meta_description: "Holiday Apartment Parndorf - cozy flat in a prime location. Only 2 km from the Designer Outlet. Ideal for shopping, relaxing at Lake Neusiedl, and business trips.",
-            // ... (alle anderen englischen Übersetzungen) ...
-            country: "Austria",
-            footer_contact_title: "Contact",
-            // ++ HINZUGEFÜGT ++
-            map_consent_text: "To display the map, your consent is required to load content from Google Maps. Personal data may be transmitted to Google in the process.",
-            map_consent_button: "Load Map"
-        }
-    };
+    de: {
+        // META
+        document_title: "Ferienwohnung Parndorf - Gemütliches Apartment in Top-Lage",
+        meta_description: "Ferienwohnung Parndorf - gemütliches Apartment in Top-Lage. Nur 2 km vom Designer Outlet entfernt. Ideal für Shopping, Erholung am Neusiedler See und Dienstreisen.",
+
+        // HEADER
+        title_main: "Ferienwohnung Parndorf",
+        subtitle: "Ein Zuhause fernab der Heimat",
+
+        // SLIDESHOW & BILDER
+        aria_carousel: "Bilderkarussell der Ferienwohnung",
+        alt_living_room: "Ansicht des gemütlichen Wohnzimmers",
+        caption_living_room: "Gemütliches Wohnzimmer mit bequemer Couch",
+        alt_bedroom: "Ansicht des Schlafzimmers",
+        caption_bedroom: "Schlafzimmer",
+        alt_bed: "Bequemes Bett",
+        alt_kitchen: "Ansicht der voll ausgestatteten Küche",
+        caption_kitchen: "Küche",
+        alt_bathroom: "Ansicht des modernen Badezimmers",
+        caption_bathroom: "Badezimmer",
+        alt_enter: "Ansicht des Eingangsbereichs",
+        alt_eating: "Ansicht des Essbereichs",
+        alt_wc: "Ansicht des separaten WCs",
+        alt_terrace: "Ansicht der privaten Terrasse",
+        alt_garden: "Ansicht des Gartens",
+        aria_prev_slide: "Vorheriges Bild",
+        aria_next_slide: "Nächstes Bild",
+
+        // HAUPTINHALT
+        apartment_title: "Ihr gemütliches Apartment in Parndorf",
+        apartment_p1: "Willkommen in unserer Ferienwohnung, Ihrem idealen Rückzugsort in Parndorf! Unser Apartment bietet Ihnen höchsten Komfort in einer ruhigen Umgebung und ist perfekt für Urlauber, Shopping-Begeisterte und Geschäftsreisende geeignet.",
+        highlights_title: "Highlights der Unterkunft",
+        highlight_1: "<strong>Top-Lage:</strong> Nur <strong>2 km</strong> zum bekannten Designer Outlet Parndorf.",
+        highlight_2: "<strong>Verkehrsgünstig:</strong> Direkte Anbindung an die Autobahnen A4 und A6.",
+        highlight_3: "<strong>Natur pur:</strong> Nur <strong>8 km</strong> zum schönen Neusiedler See.",
+        highlight_4: "<strong>Einfache Anreise:</strong> <strong>32 km</strong> zum Flughafen Wien (VIE).",
+        highlight_5: "<strong>Komfort:</strong> Bäcker in der Nähe, kostenloses WLAN und ein <strong>privater Parkplatz</strong> direkt vor der Haustüre.",
+        apartment_p2: "Unser Apartment verfügt über eine voll ausgestattete Küche und ein stilvolles Interieur, das zum Entspannen einlädt.",
+        booking_button: "Booking.com",
+        airbnb_button: "Airbnb",
+        host_title: "Ihre Gastgeberin",
+        host_quote: "\"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen.\"",
+
+        // AUSSTATTUNG
+        amenities_title: "Unsere Ausstattung",
+        amenity_wifi: "WLAN",
+        amenity_bedrooms: "2 Schlafzimmer",
+        amenity_smart_tv: "Fernseher",
+        amenity_kitchen: "Küche",
+        amenity_pets: "Hundefreundlich",
+        amenity_garden: "Garten & Terrasse",
+        amenity_parking: "Parkplatz",
+        amenity_accessible: "Barrierefrei",
+        amenity_kids: "Gitterbett & Hochstuhl",
+        amenity_quiet: "Ruhige Lage",
+
+        // KARTE
+        location_title: "Lage & Umgebung",
+        aria_map: "Karte mit dem Standort der Ferienwohnung",
+        map_consent_text: "Um die Karte anzuzeigen, ist Ihre Zustimmung zum Laden von Inhalten von Google Maps erforderlich. Dabei werden möglicherweise personenbezogene Daten an Google übermittelt.",
+        map_consent_button: "Karte laden",
+
+        // FOOTER
+        footer_imprint_title: "Impressum",
+        country: "Österreich",
+        footer_contact_title: "Kontakt"
+    },
+    en: {
+        // META
+        document_title: "Holiday Apartment Parndorf - Cozy Flat in a Prime Location",
+        meta_description: "Holiday Apartment Parndorf - cozy flat in a prime location. Only 2 km from the Designer Outlet. Ideal for shopping, relaxing at Lake Neusiedl, and business trips.",
+
+        // HEADER
+        title_main: "Holiday Apartment Parndorf",
+        subtitle: "A home away from home",
+
+        // SLIDESHOW & IMAGES
+        aria_carousel: "Image carousel of the holiday apartment",
+        alt_living_room: "View of the cozy living room",
+        caption_living_room: "Cozy living room with a comfortable couch",
+        alt_bedroom: "View of the bedroom",
+        caption_bedroom: "Bedroom",
+        alt_bed: "Comfortable bed",
+        alt_kitchen: "View of the fully equipped kitchen",
+        caption_kitchen: "Kitchen",
+        alt_bathroom: "View of the modern bathroom",
+        caption_bathroom: "Bathroom",
+        alt_enter: "View of the entrance area",
+        alt_eating: "View of the dining area",
+        alt_wc: "View of the separate WC",
+        alt_terrace: "View of the private terrace",
+        alt_garden: "View of the garden",
+        aria_prev_slide: "Previous slide",
+        aria_next_slide: "Next slide",
+
+        // MAIN CONTENT
+        apartment_title: "Your Cozy Apartment in Parndorf",
+        apartment_p1: "Welcome to our holiday apartment, your ideal retreat in Parndorf! Our apartment offers you the highest comfort in a quiet environment and is perfect for vacationers, shopping enthusiasts, and business travelers.",
+        highlights_title: "Accommodation Highlights",
+        highlight_1: "<strong>Prime Location:</strong> Only <strong>2 km</strong> to the famous Designer Outlet Parndorf.",
+        highlight_2: "<strong>Conveniently Located:</strong> Direct access to the A4 and A6 motorways.",
+        highlight_3: "<strong>Pure Nature:</strong> Only <strong>8 km</strong> to the beautiful Lake Neusiedl.",
+        highlight_4: "<strong>Easy Arrival:</strong> <strong>32 km</strong> to Vienna International Airport (VIE).",
+        highlight_5: "<strong>Comfort:</strong> Bakery nearby, free Wi-Fi, and a <strong>private parking space</strong> right at your doorstep.",
+        apartment_p2: "Our apartment features a fully equipped kitchen and a stylish interior that invites you to relax.",
+        booking_button: "Booking.com",
+        airbnb_button: "Airbnb",
+        host_title: "Your Host",
+        host_quote: "\"I look forward to welcoming you personally and making your stay an unforgettable one.\"",
+
+        // AMENITIES
+        amenities_title: "Our Amenities",
+        amenity_wifi: "Wi-Fi",
+        amenity_bedrooms: "2 Bedrooms",
+        amenity_smart_tv: "Television",
+        amenity_kitchen: "Kitchen",
+        amenity_pets: "Dog-friendly",
+        amenity_garden: "Garden & Terrace",
+        amenity_parking: "Parking",
+        amenity_accessible: "Accessible",
+        amenity_kids: "Crib & High Chair",
+        amenity_quiet: "Quiet Location",
+
+        // MAP
+        location_title: "Location & Surroundings",
+        aria_map: "Map showing the location of the apartment",
+        map_consent_text: "To display the map, your consent is required to load content from Google Maps. Personal data may be transmitted to Google in the process.",
+        map_consent_button: "Load Map",
+
+        // FOOTER
+        footer_imprint_title: "Imprint",
+        country: "Austria",
+        footer_contact_title: "Contact"
+    }
+};
 
     const languageSelector = document.querySelector('.language-selector');
     if (languageSelector) {
