@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		amenity_baecker: "Bäcker in der Umgebung",
 		amenity_bicycle: "Fahrradfreundlich und Fahrradwege",
 		amenity_waschmaschine: "Waschmaschine",
-		amenity_bahnhof: ">Bahnhof nach Wien, Neusiedl am See, Bratislava, Hegyeshalom, Budapest"
-		amenity_sofa: "Sofa"
+		amenity_bahnhof: ">Bahnhof nach Wien, Neusiedl am See, Bratislava, Hegyeshalom, Budapest",
+		amenity_sofa: "Sofa",
 		
 		
     },
@@ -238,8 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
         amenity_baecker: "Bakeries nearby",
         amenity_bicycle: "Bicycle-friendly and bike paths",
         amenity_waschmaschine: "Washing machine",
-        amenity_bahnhof: "Train station to Vienna, Neusiedl am See, Bratislava, Hegyeshalom, Budapest"
-        amenity_sofa: "Sofa"
+        amenity_bahnhof: "Train station to Vienna, Neusiedl am See, Bratislava, Hegyeshalom, Budapest",
+        amenity_sofa: "Sofa",
 
         // MAP
         location_title: "Location & Surroundings",
