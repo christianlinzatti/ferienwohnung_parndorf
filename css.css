@@ -255,6 +255,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+	width: 140px;
   }
   .airbnb-btn {
     background: var(--accent-airbnb);

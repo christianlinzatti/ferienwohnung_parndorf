@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // AUSSTATTUNG
         amenities_title: "Unsere Ausstattung",
-        amenity_wifi: "WLAN",
+        amenity_wifi: "gratis WLAN",
         amenity_bedrooms: "2 Schlafzimmer",
         amenity_smart_tv: "Fernseher",
         amenity_kitchen: "Küche",
@@ -170,7 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // FOOTER
         footer_imprint_title: "Impressum",
         country: "Österreich",
-        footer_contact_title: "Kontakt"
+        footer_contact_title: "Kontakt",
+		amenity_baecker: "Bäcker in der Umgebung",
+		amenity_bicycle: "Fahrradfreundlich und Fahrradwege",
+		amenity_waschmaschine: "Waschmaschine",
+		amenity_bahnhof: ">Bahnhof nach Wien, Neusiedl am See, Bratislava, Hegyeshalom, Budapest"
+		amenity_sofa: "Sofa"
+		
+		
     },
     en: {
         // META
@@ -227,6 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
         amenity_accessible: "Accessible",
         amenity_kids: "Crib & High Chair",
         amenity_quiet: "Quiet Location",
+		
+        amenity_baecker: "Bakeries nearby",
+        amenity_bicycle: "Bicycle-friendly and bike paths",
+        amenity_waschmaschine: "Washing machine",
+        amenity_bahnhof: "Train station to Vienna, Neusiedl am See, Bratislava, Hegyeshalom, Budapest"
+        amenity_sofa: "Sofa"
 
         // MAP
         location_title: "Location & Surroundings",
