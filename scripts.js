@@ -396,5 +396,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+	
+	
+	const headerSlides = document.querySelectorAll('.header-slide');
+    if (headerSlides.length > 1) {
+        let currentHeaderIndex = 0;
+
+        const showHeaderSlide = (index) => {
+            headerSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        };
+
+        // Zeige die erste Folie sofort an
+        showHeaderSlide(currentHeaderIndex);
+
+        // Wechsle die Folien alle 6 Sekunden
+        setInterval(() => {
+            currentHeaderIndex = (currentHeaderIndex + 1) % headerSlides.length;
+            showHeaderSlide(currentHeaderIndex);
+        }, 6000);
+    }
+	
+	
     // HIER ENDET der DOMContentLoaded Event-Listener
 });
