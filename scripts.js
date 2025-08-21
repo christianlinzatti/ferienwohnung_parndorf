@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		amenity_baecker: "Bäcker in der Umgebung",
 		amenity_bicycle: "Fahrradfreundlich und Fahrradwege",
 		amenity_waschmaschine: "Waschmaschine",
-		amenity_bahnhof: ">Bahnhof nach Wien, Neusiedl am See, Bratislava, Hegyeshalom, Budapest",
+		amenity_bahnhof: "Bahnhof nach Wien, Neusiedl am See, Bratislava, Hegyeshalom, Budapest",
 		amenity_sofa: "Sofa",
 		
 		
