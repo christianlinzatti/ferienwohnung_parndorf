@@ -550,6 +550,7 @@ header p {
 }
 
 
+/* General Header Styling */
 header {
     position: relative;
     color: white;
@@ -561,9 +562,10 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 20vh; /* Etwas mehr Höhe für die Wirkung der Bilder */
+    min-height: 20vh;
 }
 
+/* Header Slideshow and Image Styling */
 .header-slideshow {
     position: absolute;
     top: 0;
@@ -582,87 +584,56 @@ header {
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 1.5s ease-in-out; /* Sanfterer Übergang */
-    transform: scale(1.1); /* Start-Zoom für Ken-Burns-Effekt */
+    transition: opacity 1.5s ease-in-out;
+    transform: scale(1.1);
 }
 
 .header-slide.active {
     opacity: 1;
-    transform: scale(1); /* End-Zoom */
-    transition: opacity 1.5s ease-in-out, transform 8s linear; /* Längere Transition für den Zoom */
+    transform: scale(1);
+    transition: opacity 1.5s ease-in-out, transform 8s linear;
 }
 
-/* 1. Der Overlay wird zu einem sanften Farbverlauf */
+/* MODIFIED: Softer, static gradient overlay using theme colors */
 .header-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%); /* Dunkler Verlauf von unten nach oben */
+    /* This gradient uses the dark green from your color scheme for a more integrated feel */
+    background: linear-gradient(to top, rgba(0, 51, 44, 0.65) 0%, transparent 50%);
     z-index: 2;
 }
 
-/* 2. Positionierung der Flaggen in der oberen rechten Ecke */
+/* Header Content (Text) Styling */
+.header-content {
+    position: relative;
+    z-index: 3;
+    /* MODIFIED: Softer text shadow for better readability */
+    text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+header h1 {
+    color: white;
+    font-size: 3em;
+    font-weight: 700;
+    margin: 0;
+}
+
+header p {
+    margin-top: 5px;
+    color: #f0f0f0;
+    font-size: 1.3em;
+    font-style: italic;
+}
+
+/* Language selector position */
 .language-selector {
     position: absolute;
     top: 20px;
     right: 20px;
     display: flex;
     gap: 10px;
-    z-index: 4; /* Stellt sicher, dass sie über allem liegen */
-}
-
-/* 3. Optional: Leichte Anpassung am Stil der aktiven Flagge für besseren Kontrast */
-.language-selector img.active {
-    opacity: 1;
-    box-shadow: 0 0 0 2px white; /* Weißer Rahmen statt des dunklen Schattens */
-    border-radius: 50%;
-}
-
-.header-content {
-    position: relative;
-    z-index: 3; /* Stellt sicher, dass der Inhalt über der Abdunklung liegt */
-    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-	
-
-}
-
-header h1 {
-    color: white;
-    font-size: 3em;
-}
-
-header p {
-    color: #f0f0f0;
-    font-size: 1.3em;
-}
-
-@media (max-width: 768px) {
-    header {
-        min-height: 40vh; /* Etwas höhere Mindesthöhe auf Mobilgeräten */
-    }
-
-    header h1 {
-        font-size: 2.2em; /* Kleinere Schrift für die Hauptüberschrift */
-    }
-
-    header p {
-        font-size: 1.1em; /* Kleinere Schrift für den Untertitel */
-    }
-
-    .cta-button {
-        padding: 10px 20px;
-        font-size: 0.9em;
-    }
-}
-
-.header-overlay {
-    background: linear-gradient(120deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
-    animation: gradientMove 8s ease-in-out infinite alternate;
-}
-
-@keyframes gradientMove {
-    from { background-position: 0% 50%; }
-    to   { background-position: 100% 50%; }
+    z-index: 4;
 }
