@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         booking_button: "Booking.com",
         airbnb_button: "Airbnb",
         host_title: "Ihre Gastgeberin",
-        host_quote: "\"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen.\"",
+        host_quote: "\"Ich freue mich darauf, Sie persönlich willkommen zu heißen und Ihnen einen unvergesslichen Aufenthalt zu ermöglichen. Schreiben Sie mir eine Nachricht oder buchen Sie auf booking.com oder airbnb die Unterkunft. Von Burgenland Tourismus wurde meine Unterkunft mit 3 Sonnen ausgezeichnet.\"",
 
         // AUSSTATTUNG
         amenities_title: "Unsere Ausstattung",
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         booking_button: "Booking.com",
         airbnb_button: "Airbnb",
         host_title: "Your Host",
-        host_quote: "\"I look forward to welcoming you personally and making your stay an unforgettable one.\"",
+        host_quote: "\"I look forward to welcoming you personally and making your stay an unforgettable one. Please write me if you have any questions and book it on booking.com or airbnb. My accommodation was awarded 3 suns by Burgenland Tourism.\"",
 
         // AMENITIES
         amenities_title: "Our Amenities",
