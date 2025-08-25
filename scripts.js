@@ -283,7 +283,11 @@ document.addEventListener('DOMContentLoaded', () => {
             flags.forEach(flag => {
                 flag.classList.toggle('active', flag.dataset.lang === lang);
             });
-        };
+        }
+
+        // make language setter available globally for burger menu
+        window.setLanguage = setLanguage;
+;
 
         flags.forEach(flag => {
             flag.addEventListener('click', (event) => {
@@ -419,5 +423,149 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 	
 	
+	const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.getElementById('main-nav');
+    const navLinks = mainNav.querySelectorAll('a');
+
+    if (navToggle && mainNav) {
+    const lockScroll = (locked) => {
+        document.documentElement.classList.toggle('no-scroll', locked);
+        document.body.classList.toggle('no-scroll', locked);
+    };
+
+    const setAria = () => {
+        const open = mainNav.classList.contains('open');
+        navToggle.setAttribute('aria-expanded', String(open));
+    };
+
+    // Open/close on button click
+    navToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('open');
+        navToggle.classList.toggle('open');
+        lockScroll(mainNav.classList.contains('open'));
+        setAria();
+    });
+
+    // Close when a link is clicked (one-pager)
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mainNav.classList.remove('open');
+            navToggle.classList.remove('open');
+            lockScroll(false);
+            setAria();
+        });
+    });
+
+    // Init ARIA state
+    setAria();
+}
+
+
+const popup = document.getElementById("photo-popup");
+const popupImages = popup?.querySelector(".popup-images");
+const popupClose = popup?.querySelector(".popup-close");
+const btnPrev = popup?.querySelector(".prev");
+const btnNext = popup?.querySelector(".next");
+
+let currentIndex = 0;
+let currentGallery = [];
+
+document.querySelectorAll(".photo-link a").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const gallery = link.dataset.gallery;
+    const galleries = {
+      schlafzimmer: ["schlafzimmer.jpg", "betten.jpg", "bett_kasten.jpg"],
+      wohnzimmer: ["wohnzimmer.jpg", "bilder/wohn2.jpg"],
+	  kueche: ["kueche.jpg","essbereich.jpg"],
+	  badezimmer: ["badezimmer.jpg", "wc.jpg"],
+	  terrasse: ["terrasse.jpg","garten.jpg"],
+	  eingang: ["eingangsbereich.jpg"],
+	  terrasse: ["terrasse.jpg", "garten.jpg"],
+    };
+    currentGallery = galleries[gallery] || [];
+    currentIndex = 0;
+    renderGallery();
+    popup.style.display = "flex";
+  });
+});
+
+function renderGallery() {
+  popupImages.innerHTML = "";
+  currentGallery.forEach((src, idx) => {
+    const img = document.createElement("img");
+    img.src = src;
+    if (idx === currentIndex) img.classList.add("active");
+    popupImages.appendChild(img);
+  });
+}
+
+function showNext() {
+  currentIndex = (currentIndex + 1) % currentGallery.length;
+  renderGallery();
+}
+
+function showPrev() {
+  currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+  renderGallery();
+}
+
+btnNext?.addEventListener("click", showNext);
+btnPrev?.addEventListener("click", showPrev);
+
+popupClose?.addEventListener("click", () => {
+  popup.style.display = "none";
+});
+
+popup?.addEventListener("click", e => {
+  if (e.target === popup) popup.style.display = "none";
+});
+	
+	
+    
+    // === Burger-Menü: Submenu (Fotos) als Accordion (ohne Floats) ===
+    document.querySelectorAll('.submenu-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const li = btn.closest('li');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        li.classList.toggle('open', !expanded);
+      });
+    });
+
+    // === Sprachumschaltung auch im Burger-Menü ===
+    const navLangButtons = document.querySelectorAll('.main-nav .language-switcher .lang-trigger');
+
+    function updateNavLangButtons(lang) {
+      navLangButtons.forEach(btn => {
+        const active = btn.dataset.lang === lang;
+        btn.setAttribute('aria-pressed', String(active));
+        btn.classList.toggle('active', active);
+      });
+    }
+
+    // Clicks auf Burger-Sprachbuttons -> benutze die globale setLanguage (wird oben exportiert)
+    navLangButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (window.setLanguage) {
+          const lang = btn.dataset.lang;
+          window.setLanguage(lang);
+          updateNavLangButtons(lang);
+        } else {
+          console.warn('setLanguage ist noch nicht verfügbar.');
+        }
+      });
+    });
+
+    // Flaggen im Header synchronisieren die Burger-Buttons visuell
+    document.querySelectorAll('.language-selector img[data-lang]').forEach(img => {
+      img.addEventListener('click', () => updateNavLangButtons(img.getAttribute('data-lang')));
+    });
+
+    // Initialzustand
+    updateNavLangButtons(localStorage.getItem('language') || document.documentElement.lang || 'de');
+
     // HIER ENDET der DOMContentLoaded Event-Listener
 });
+
+

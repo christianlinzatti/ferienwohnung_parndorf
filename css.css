@@ -637,3 +637,304 @@ header p {
     gap: 10px;
     z-index: 4;
 }
+
+.nav-toggle {
+    display: none; /* Standardmäßig auf Desktops versteckt */
+    position: absolute;
+    top: 20px;
+    left: 20px; /* Position oben links */
+    z-index: 10;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.hamburger::before {
+    transform: translateY(-8px);
+}
+
+.hamburger::after {
+    transform: translateY(8px);
+}
+
+/* Stil für das "X" im geöffneten Zustand */
+.nav-toggle.open .hamburger {
+    background-color: transparent; /* Mittlerer Strich verschwindet */
+}
+.nav-toggle.open .hamburger::before {
+    transform: rotate(45deg);
+}
+.nav-toggle.open .hamburger::after {
+    transform: rotate(-45deg) translateY(-1px) translateX(1px); /* Feinanpassung */
+}
+
+
+/* Styling für die Navigation (Mobile First) */
+/* Ab 900px wird dies überschrieben */
+@media (max-width: 900px) {
+    /* Burger-Button anzeigen */
+    .nav-toggle {
+        display: block;
+    }
+
+    /* Bestehende Desktop-Navigation ausblenden */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Volle Höhe */
+        background-color: rgba(0, 51, 44, 0.98); /* Dunkler Hintergrund mit Transparenz */
+        backdrop-filter: blur(5px);
+        transform: translateX(-100%); /* Startet außerhalb des Bildschirms */
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Die Navigation wird sichtbar, wenn sie die Klasse "open" hat */
+    .main-nav.open {
+        transform: translateX(0);
+    }
+    
+    /* Die Menüpunkte */
+    .main-nav ul {
+        flex-direction: column; /* Untereinander anordnen */
+        align-items: center;
+        background-color: transparent; /* Den alten Hintergrund entfernen */
+        padding: 0;
+    }
+
+    .main-nav li {
+        margin: 20px 0;
+    }
+
+    .main-nav a {
+        font-size: 1.8em; /* Größere Schrift für bessere Klickbarkeit */
+        color: white;
+        padding: 10px 20px;
+    }
+    
+    /* Sprachauswahl nach links verschieben, damit sie nicht mit dem Menü kollidiert */
+    .language-selector {
+        left: 70px; /* Platz für den Burger-Button lassen */
+        right: auto;
+    }
+}
+/* === Sticky Header + Always-visible Burger (Appended by assistant) === */
+:root{
+  --header-offset: 96px; /* used for anchor scroll offset */
+}
+
+/* Keep header at the top while scrolling without covering content */
+header{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* Make the burger button visible on all viewports and fixed on screen */
+.nav-toggle{
+  display: block !important;
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 16px;
+  z-index: 1000;
+  padding: 10px;
+  background: transparent;
+}
+
+/* Prevent background scrolling when the menu is open */
+.no-scroll{
+  overflow: hidden;
+}
+
+/* Ensure anchor links aren't hidden behind the sticky header */
+[id]{
+  scroll-margin-top: var(--header-offset);
+}
+
+/* Desktop off-canvas navigation (side drawer) */
+@media (min-width: 901px){
+  .main-nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(380px, 90vw);
+    height: 100vh;
+    background-color: rgba(0, 51, 44, 0.98);
+    backdrop-filter: blur(5px);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-nav.open{
+    transform: translateX(0);
+  }
+  .main-nav ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .main-nav a{
+    font-size: 1.3em;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+  }
+}
+
+/* === Popup Gallery (Appended by assistant) === */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+.popup-close {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.popup-images img {
+  max-width: 100%;
+  height: auto;
+  margin: 8px 0;
+  display: block;
+}
+
+
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+  margin: 5px 0;
+}
+.submenu li a {
+  font-size: 0.9em;
+}
+
+/* Popup Navigation */
+.popup-content {
+  position: relative;
+  text-align: center;
+}
+
+.popup-images img {
+  max-width: 100%;
+  max-height: 70vh;
+  display: none;
+  margin: 0 auto;
+}
+
+.popup-images img.active {
+  display: block;
+}
+
+.popup-content .prev,
+.popup-content .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.popup-content .prev { left: 10px; }
+.popup-content .next { right: 10px; }
+
+/* === Override: Fotos-Unterpunkte NICHT floated, sondern Block === */
+.main-nav .has-submenu .submenu li,
+.main-nav .has-submenu .submenu li a {
+  float: none !important;
+  display: block;
+  clear: none !important;
+}
+
+@media (max-width: 900px) {
+  .main-nav .has-submenu .submenu {
+    display: block; /* bleibt Accordion-gesteuert via max-height/opacity im JS, kein Float */
+  }
+}
+
+.submenu li a img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.icon-grid {display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+.icon-link {display:inline-flex; padding:8px; border-radius:12px; text-decoration:none}
+.icon-link:hover {background:#000000}
+
+.language-switcher {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.language-switcher .lang-trigger {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--background-light);
+  font-weight: 600;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.language-switcher .lang-trigger:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.language-switcher .lang-trigger.active {
+  background-color: var(--secondary-color);
+  color: white;
+  box-shadow: 0 0 0 2px var(--primary-color) inset;
+}
