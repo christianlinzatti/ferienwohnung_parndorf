@@ -429,9 +429,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (navToggle && mainNav) {
     const lockScroll = (locked) => {
-        document.documentElement.classList.toggle('no-scroll', locked);
-        document.body.classList.toggle('no-scroll', locked);
-    };
+  if (locked) {
+    document.body.style.overflow = "hidden";   // Seite sperren
+  } else {
+    document.body.style.overflow = "";         // zurücksetzen
+  }
+};
 
     const setAria = () => {
         const open = mainNav.classList.contains('open');

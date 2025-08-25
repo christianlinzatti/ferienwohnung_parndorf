@@ -692,20 +692,23 @@ header p {
 
     /* Bestehende Desktop-Navigation ausblenden */
     .main-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh; /* Volle Höhe */
-        background-color: rgba(0, 51, 44, 0.98); /* Dunkler Hintergrund mit Transparenz */
-        backdrop-filter: blur(5px);
-        transform: translateX(-100%); /* Startet außerhalb des Bildschirms */
-        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        z-index: 5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 51, 44, 0.98);
+  backdrop-filter: blur(5px);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* statt center, damit oben beginnt */
+  padding: 80px 20px 20px;     /* Abstand für Burger-Button */
+  overflow-y: auto;            /* <--- Menü selbst scrollbar machen */
+}
     
     /* Die Navigation wird sichtbar, wenn sie die Klasse "open" hat */
     .main-nav.open {
@@ -713,12 +716,14 @@ header p {
     }
     
     /* Die Menüpunkte */
-    .main-nav ul {
-        flex-direction: column; /* Untereinander anordnen */
-        align-items: center;
-        background-color: transparent; /* Den alten Hintergrund entfernen */
-        padding: 0;
-    }
+  .main-nav ul {
+  flex-direction: column !important;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
     .main-nav li {
         margin: 20px 0;
@@ -789,15 +794,11 @@ header{
   .main-nav.open{
     transform: translateX(0);
   }
-  .main-nav ul{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
+ .main-nav ul {
+  max-height: calc(100vh - 120px); /* Platz für Header & Sprache */
+  flex-direction: column !important;
+  overflow-y: auto;
+}
   .main-nav a{
     font-size: 1.3em;
     color: white;
@@ -905,7 +906,7 @@ header{
   border-radius: 4px;
 }
 
-.icon-grid {display:flex; gap:16px; align-items:center; flex-wrap:wrap}
+.icon-grid {display:flex; gap:12px; align-items:center; flex-wrap:wrap}
 .icon-link {display:inline-flex; padding:8px; border-radius:12px; text-decoration:none}
 .icon-link:hover {background:#000000}
 
