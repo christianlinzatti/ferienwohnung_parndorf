@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alt_bathroom: "Ansicht des modernen Badezimmers",
         caption_bathroom: "Badezimmer",
         alt_enter: "Ansicht des Eingangsbereichs",
-        alt_eating: "Ansicht des Essbereichs",
+        alt_eating: "Küche",
         alt_wc: "Ansicht des separaten WCs",
         alt_terrace: "Ansicht der privaten Terrasse",
         alt_garden: "Ansicht des Gartens",
